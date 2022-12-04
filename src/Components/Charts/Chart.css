@@ -1,0 +1,10 @@
+.stati:hover {
+    margin-top: 0.5em;
+    -moz-box-shadow: 0px 0.4em 0.5em rgb(0, 0, 0, 0.8);
+    -webkit-box-shadow: 0px 0.4em 0.5em rgb(0, 0, 0, 0.8);
+    box-shadow: 0px 0.4em 0.5em rgb(0, 0, 0, 0.8);
+}
+
+.stati i {
+    font-size: 3em;
+}
