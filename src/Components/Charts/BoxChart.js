@@ -7,55 +7,17 @@ import { useNavigate } from "react-router-dom";
 import { API_USER } from "../../common/ApiController";
 import { getStaticAction } from "../../Redux/Action/ChartActions";
 import './Chart.css';
+import { getAllUserAction } from "../../Redux/Action/UserActions";
+import { getComingMoviesAction, getShowingMoviesAction } from "../../Redux/Action/MovieActions";
 const BoxChart = () => {
   const store = useContext(StoreContext);
   let token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
   useEffect(() => {
     //GetStaticAction()
-    fetch(API_USER.GET_ALL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((dt) => {
-        store.users.UsersDispatch({
-          type: "GET_ALL",
-          payload: dt.data,
-        });
-      });
-    fetch("http://localhost:5000/movies", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((dt) => {
-        store.lsShowingMovie.ShowingMovieDispatch({
-          type: "GETSHOWINGMOVIES",
-          payload: dt.data,
-        });
-      });
-
-    fetch("http://localhost:5000/movies/coming", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((dt) => {
-        store.lsComingMovie.ComingMovieDispatch({
-          type: "GETCOMINGMOVIES",
-          payload: dt.data,
-        });
-      })
+    getAllUserAction({ store })
+    getShowingMoviesAction({ store })
+    getComingMoviesAction({ store })
     getStaticAction({ store })
   }, []);
 

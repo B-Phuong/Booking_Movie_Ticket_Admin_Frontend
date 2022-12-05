@@ -62,7 +62,7 @@ export default function SignIn() {
                 payload: localStorage.getItem("taiKhoan"),
             });
             if (JSON.parse(localStorage.getItem("maLoaiNguoiDung")) === "0") {
-                navigate("/Admin");
+                navigate("/Admin/Movies");
             }
             else swal({
                 title: "Bạn không có quyền truy cập!",
@@ -91,7 +91,7 @@ export default function SignIn() {
             <div>
                 <div className="signin">
                     <label>Tài khoản</label>
-                    <input type="text" placeholder="Nhập mật khẩu"
+                    <input type="text" placeholder="Nhập tài khoản"
                         onChange={(e) =>
                             setUserName(e.target.value)
                         } />
@@ -103,7 +103,7 @@ export default function SignIn() {
                             setPassword(e.target.value)
                         } />
                 </div>
-                <div>
+                <div style={{ padding: "10px 40px", marginLeft: "95px" }}>
                     <button className="button-custom yes" onClick={() => {
                         handleClick()
                         console.log(">> test")
@@ -113,4 +113,3 @@ export default function SignIn() {
         </div>
     )
 }
-

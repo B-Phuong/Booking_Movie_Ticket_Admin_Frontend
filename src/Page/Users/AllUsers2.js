@@ -10,6 +10,7 @@ import InfoUserModal from "../../Components/InfoUserModal/InfoUserModal";
 import { CSVLink } from "react-csv";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
+import { getAllUserAction } from "../../Redux/Action/UserActions";
 
 export default function AllUsers2() {
   const store = useContext(StoreContext);
@@ -18,20 +19,7 @@ export default function AllUsers2() {
   let token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
-    fetch(API_USER.GET_ALL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((dt) => {
-        store.users.UsersDispatch({
-          type: "GET_ALL",
-          payload: dt.data,
-        });
-      });
+    getAllUserAction({ store })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,11 +39,13 @@ export default function AllUsers2() {
   };
   const headers = [
     { label: "Tên tài khoản", key: "tentaiKhoan" },
-    { label: "Họ tên", key: "moTa" },
-    { label: "Email", key: "email" }
+    { label: "Họ tên", key: "hoTen" },
+    { label: "Email", key: "email" },
+    { label: "Điểm thưởng", key: "diemThuong" },
+    { label: "Ngày tạo tài khoản", key: "createdAt" }
   ];
   const dataExport = data?.map((item) => {
-    return { ...item, ngayKhoiChieu: formattedDate(item.ngayKhoiChieu) }
+    return { ...item, createdAt: formattedDate(item.createdAt) }
   })
   const dataa = dataExport
   const columns = [
@@ -160,7 +150,7 @@ export default function AllUsers2() {
             ) : (
               <div style={{ border: "1px solid #B3BFAA" }}>
                 <div style={{ padding: "18px 0px 0px 18px", backgroundColor: "#242f40" }}>
-                  <CSVLink data={dataa} headers={headers} filename={"danhSachPhim.csv"}>
+                  <CSVLink data={dataa} headers={headers} filename={"danhSachNguoiDung.csv"}>
                     <i className="fa fa-file-export fa-lg" style={{ color: "#b5c4a9", fontSize: "16px" }}> CSV</i>
                   </CSVLink>
                 </div>

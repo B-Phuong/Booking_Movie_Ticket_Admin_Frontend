@@ -11,6 +11,7 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { CSVLink } from "react-csv";
 import DataTable from "react-data-table-component";
+import { getAllFDsAction } from "../../Redux/Action/FDActions";
 
 export default function AllFoodDrinks2() {
   const store = useContext(StoreContext);
@@ -19,14 +20,7 @@ export default function AllFoodDrinks2() {
   // console.log(">>ID in AllFoodsDrinks", biDanh);
 
   useEffect(() => {
-    fetch(API_FOODDRINKS.GET_ALL)
-      .then((res) => res.json())
-      .then((dt) => {
-        store.fooddrinks.GetAllDispatch({
-          type: "GETALLFOODDRINKS",
-          payload: dt.data,
-        });
-      });
+    getAllFDsAction({ store })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -47,10 +41,11 @@ export default function AllFoodDrinks2() {
     return yyyy + "-" + mm + "-" + dd;
   };
   const headers = [
-    { label: "Tên phim", key: "tenCombo" },
+    { label: "Tên combo", key: "tenCombo" },
     { label: "Mô tả", key: "moTa" },
     { label: "Số lượng bán", key: "soLuongBan" },
-
+    { label: "Giá tiền", key: "giaGoc" },
+    { label: "Giảm giá", key: "giamGia" },
   ];
   const dataa = fooddrinks
   const columns = [
@@ -69,7 +64,7 @@ export default function AllFoodDrinks2() {
       minHeight: "100px",
       // selector: row => row.moTa,
       cell: (row) => <td className="organisationname image" >
-        <img height="80px" width="60px" src={row.hinhAnh} alt="" />
+        <img height="80px" width="60px" src={row.hinhAnh} alt={"Không tải được ảnh"} />
       </td >,
     },
     {
@@ -77,7 +72,7 @@ export default function AllFoodDrinks2() {
       // selector: row => row.moTa,
       width: "340px",
       cell: (row) => <td>
-        <div className="organisationname-description">{row.moTa}</div>
+        <div className="organisationname-description">{row.moTa == "" ? "Chưa có mô tả" : row.moTa}</div>
       </td>,
     },
     {
@@ -173,7 +168,7 @@ export default function AllFoodDrinks2() {
               // </div>
               <div style={{ border: "1px solid #B3BFAA" }}>
                 <div style={{ padding: "18px 0px 0px 18px", backgroundColor: "#242f40" }}>
-                  <CSVLink data={dataa} headers={headers} filename={"danhSachPhim.csv"}>
+                  <CSVLink data={dataa} headers={headers} filename={"danhSachCombo.csv"}>
                     <i className="fa fa-file-export fa-lg" style={{ color: "#b5c4a9", fontSize: "16px" }}>CSV</i>
                   </CSVLink>
                 </div>

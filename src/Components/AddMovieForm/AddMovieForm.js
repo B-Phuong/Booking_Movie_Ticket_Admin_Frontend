@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Card, Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 import { Multiselect } from "multiselect-react-dropdown";
 import "../../Page/Movies/MovieManage.css";
+import { addMovieAction } from "../../Redux/Action/MovieActions";
 
 function AddMovieForm(props) {
   const store = useContext(StoreContext);
@@ -47,52 +48,13 @@ function AddMovieForm(props) {
       title: "Xin chờ giây lát",
       buttons: false,
     });
-    const token = JSON.parse(localStorage.getItem("token"));
-    fetch(API_MOVIE.ADD, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: "POST",
-      body: fd,
-    })
-      .then((res) => {
-        if (res.status === 401) {
-          swal({
-            title: "Vui lòng đăng nhập lại",
-            text: "Phiên đăng nhập đã hết hạn",
-            icon: "warning",
-            buttons: true,
-          });
-          setTimeout(function () {
-            localStorage.clear();
-            navigate("/signIn");
-          }, 1000);
-        }
-        if (res.status == 201) {
-          swal({
-            title: "Thêm phim thành công",
-            text: "",
-            icon: "success",
-          });
-          setTimeout(function () {
-            navigate(0);
-          }, 1000);
-        } else return res.json();
-      })
-      .then((response) => {
-        // console.log("response", response);
-        if (response != true)
-          return swal({
-            title: "Thêm phim thất bại",
-            text: response.error,
-            icon: "error",
-          });
-      });
+    addMovieAction({ store, fd, navigate })
   };
 
   const handleAdd = (e) => {
     e.preventDefault();
-    AddMovieAction(e);
+    console.log(">> before add", detailMovie)
+    // AddMovieAction(e);
   };
   // console.log(">> Invalid in add movie", isInvalid);
   const formattedDate = (dateInput) => {
@@ -247,7 +209,7 @@ function AddMovieForm(props) {
               </FloatingLabel>
             </Form.Group>
           </Row>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" style={{ width: "92%" }}>
             <Form.Label>Mô tả</Form.Label>
             <Form.Control
               as="textarea"
@@ -264,14 +226,15 @@ function AddMovieForm(props) {
                 <Multiselect
                   isObject={false}
                   onRemove={(event) => {
-                    checkValid(event);
-                    // setDetailMovie({ ...detailMovie, theLoai: event });
+                    //checkValid(event);
+                    //setDetailMovie({ ...detailMovie, theLoai: event });
                     detailMovie.theLoai = event;
                   }}
                   onSelect={(event) => {
-                    checkValid(event);
-                    // setDetailMovie({ ...detailMovie, theLoai: event });
+                    //checkValid(event);
+                    //setDetailMovie({ ...detailMovie, theLoai: event });
                     detailMovie.theLoai = event;
+                    console.log(">>  detailMovie.theLoai", detailMovie.theLoai)
                   }}
                   options={[
                     "Kinh dị",
@@ -391,9 +354,9 @@ function AddMovieForm(props) {
             Hủy
           </button>
         </div>
-      </Form>
+      </Form >
       {/* </div> */}
-    </div>
+    </div >
   );
 }
 export default AddMovieForm;

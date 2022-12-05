@@ -8,7 +8,7 @@ const ItemMovie = ({ index, movie }) => {
         {movie.tenPhim}
       </td>
       <td className="organisationname image">
-        <img height="80px" width="60px" src={movie.hinhAnh} alt="" />
+        <img height="80px" width="60px" src={movie.hinhAnh} alt={"Không tải được ảnh"} />
       </td>
       <td width="900px">
         <div className="organisationname-description">{movie.moTa}</div>

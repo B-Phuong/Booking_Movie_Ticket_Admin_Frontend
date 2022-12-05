@@ -12,6 +12,8 @@ import swal from "sweetalert";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { Button } from "../Button/Button";
+import { addShowtimeAction } from "../../Redux/Action/ShowtimeActions";
+import { getAllRoomsAction } from "../../Redux/Action/RoomActions"
 
 function AddShowtimeModal(props) {
   const [isShow, setInvokeModal] = useState(false);
@@ -53,16 +55,9 @@ function AddShowtimeModal(props) {
     });
   };
   useEffect(() => {
-    fetch(API_ROOMS.GET)
-      .then((res) => res.json())
-      .then((dt) => {
-        store.lsRooms.GetRoomsDispatch({
-          type: "GETROOMS",
-          payload: dt.data,
-        });
-      });
+    getAllRoomsAction({ store })
   }, []);
-  const token = JSON.parse(localStorage.getItem("token"));
+
 
   const AddShowtimeAction = async (e) => {
     e.preventDefault();
@@ -74,51 +69,13 @@ function AddShowtimeModal(props) {
       buttons: false,
       closeOnClickOutside: false,
     });
-    fetch(API_SHOWTIMES.ADD + props.slug + "/showtime", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        ngayChieu: formatDateTime,
-        tenRap: detailShowtime.tenRap,
-        tenCumRap: props.clusterID,
-        giaVe: detailShowtime.giaVe,
-      }),
-    })
-      .then((res) => {
-        if (res.status === 401) {
-          swal({
-            title: "Vui lòng đăng nhập lại",
-            text: "Phiên đăng nhập đã hết hạn",
-            icon: "warning",
-            buttons: true,
-          });
-          setTimeout(function () {
-            localStorage.clear();
-            navigate("/signIn");
-          }, 1000);
-        }
-        if (res.status == 201) {
-          swal({
-            title: "Thêm lịch chiếu thành công",
-            text: "",
-            icon: "success",
-          });
-          setTimeout(function () {
-            window.location.reload();
-          }, 1000);
-        } else return res.json();
-      })
-      .then((response) => {
-        if (response != true)
-          return swal({
-            title: "Thêm lịch chiếu thất bại",
-            text: response.error,
-            icon: "error",
-          });
-      });
+    let body = {
+      ngayChieu: formatDateTime,
+      tenRap: detailShowtime.tenRap,
+      tenCumRap: props.clusterID,
+      giaVe: detailShowtime.giaVe,
+    }
+    addShowtimeAction({ store, body, navigate, props })
   };
   let rooms = store.lsRooms?.Rooms?.rooms;
   const initModal = () => {

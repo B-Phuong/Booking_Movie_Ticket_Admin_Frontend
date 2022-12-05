@@ -18,6 +18,9 @@ import { Button } from "../../Components/Button/Button";
 import swal from "sweetalert";
 import AddShowtimeModal from "../../Components/AddShowtimeModal/AddShowtimeModal";
 import { List } from "react-content-loader";
+import { getTheaterAction } from "../../Redux/Action/TheaterAction";
+import { getDetailMovieAction } from "../../Redux/Action/MovieActions";
+import { deleteShowtimeAction } from "../../Redux/Action/ShowtimeActions";
 
 export default function Showtimes() {
   let slug = useParams();
@@ -41,28 +44,13 @@ export default function Showtimes() {
     setExpandedRows(newExpandedRows);
   };
   useEffect(() => {
-    fetch(API_THEATERS.THEATERS)
-      .then((res) => res.json())
-      .then((dt) => {
-        store.lsTheater.TheaterDispatch({
-          type: "GETTHEATERS",
-          payload: dt.data,
-        });
-      });
+    getTheaterAction({ store })
   }, []);
 
   useEffect(() => {
     setLoading(true);
     if (!slug) return;
-    fetch(API_MOVIE.DETAIL + slug.slug)
-      .then((res) => res.json())
-      .then((dt) => {
-        store.movie.DetailMovieDispatch({
-          type: "GETDETAILMOVIE",
-          payload: dt.data[0],
-        });
-        setLoading(false);
-      });
+    getDetailMovieAction({ store, setLoading, slug })
   }, [slug.slug]);
 
   const theaters = store.lsTheater.Theater?.lsTheater;
@@ -88,7 +76,7 @@ export default function Showtimes() {
       }
     });
   };
-  const token = JSON.parse(localStorage.getItem("token"));
+
   const DeleteShowtimeAction = (id) => {
     swal({
       icon: "info",
@@ -96,36 +84,10 @@ export default function Showtimes() {
       buttons: false,
       closeOnClickOutside: false,
     });
-    fetch(API_SHOWTIMES.DELETE + slug.slug + "/showtime", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-      body: JSON.stringify({
-        maLichChieu: id,
-      }),
-    })
-      .then((res) => {
-        if (res.status == 200) {
-          swal({
-            title: "Xóa lịch chiếu thành công",
-            text: "",
-            icon: "success",
-          });
-          setTimeout(function () {
-            navigate(0);
-          }, 1000);
-        } else return res.json();
-      })
-      .then((response) => {
-        if (response != true)
-          return swal({
-            title: "Xóa lịch chiếu thất bại",
-            text: response.error,
-            icon: "error",
-          });
-      });
+    let body = {
+      maLichChieu: id,
+    }
+    deleteShowtimeAction({ store, body, navigate, slug })
   };
   return (
     <>

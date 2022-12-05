@@ -6,6 +6,7 @@ export const API_MOVIE = {
   DETAIL: API_DOMAIN + `movies/`,
   UPDATE: API_DOMAIN + `admins/movie/`,
   ADD: API_DOMAIN + `admins/movie`,
+  DELETE: API_DOMAIN + "admins/movie/"
 };
 
 export const API_SHOWTIMES = {

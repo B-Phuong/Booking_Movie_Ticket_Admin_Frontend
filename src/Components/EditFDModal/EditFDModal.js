@@ -10,9 +10,10 @@ import { Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { List } from "react-content-loader";
 import isEmpty from "validator/lib/isEmpty";
+import { editFDAction, getDetailFDAction } from "../../Redux/Action/FDActions";
 
 function EditFDModal(props) {
-  const [isShow, setInvokeModal] = useState(false);
+  const [isShow, setShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const store = useContext(StoreContext);
   const [image, setDisplayImage] = useState();
@@ -33,36 +34,19 @@ function EditFDModal(props) {
   const [detailFD, setDetailFD] = useState(emptyFD);
   const handleClick = (biDanh) => {
     setBiDanh(biDanh);
-    setInvokeModal(true);
+    setShow(true);
   };
   var data;
   useEffect(() => {
     setLoading(true);
     if (!biDanh) return;
-    fetch(API_FOODDRINKS.DETAIL + biDanh)
-      .then((res) => res.json())
-      .then((dt) => {
-        store.fooddrinks.GetDetailFDDispatch({
-          type: "GETDETAILFOODDRINK",
-          payload: dt.data[0],
-        });
-        setDetailFD({
-          tenCombo: dt.data?.tenCombo,
-          moTa: dt.data?.moTa,
-          ghiChu: dt.data?.ghiChu,
-          giaGoc: dt.data?.giaGoc,
-          hinhAnh: dt.data?.hinhAnh,
-          giamGia: dt.data?.giamGia,
-          soLuongBan: dt.data?.soLuongBan.toString(),
-        });
+    getDetailFDAction({ store, setDetailFD, setLoading, biDanh })
 
-        setLoading(false);
-      });
   }, [biDanh, isEdit]);
   data = store.fooddrinks?.DetailFD;
   const [validated, setValidated] = useState(false);
   const initModal = () => {
-    setInvokeModal(!isShow);
+    setShow(!isShow);
     setBiDanh();
     setIsEdit(false);
     setDetailFD(emptyFD);
@@ -119,43 +103,7 @@ function EditFDModal(props) {
       closeOnClickOutside: false,
     });
     // console.log(">> fd", fd);
-    const token = JSON.parse(localStorage.getItem("token"));
-    let res = await fetch(API_FOODDRINKS.UPDATE + biDanh, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: "PUT",
-      body: fd,
-    });
-    if (res.status === 401) {
-      swal({
-        title: "Vui lòng đăng nhập lại",
-        text: "Phiên đăng nhập đã hết hạn",
-        icon: "warning",
-        buttons: true,
-      });
-      setTimeout(function () {
-        localStorage.clear();
-        navigate("/signIn");
-      }, 1000);
-    }
-    if (res.status === 200) {
-      swal({
-        title: "Cập nhật thành công!",
-        text: "",
-        icon: "success",
-        buttons: false,
-      });
-      setTimeout(function () {
-        setInvokeModal(false);
-      }, 1000);
-    } else
-      swal({
-        title: "Cập nhật thất bại",
-        text: "Hãy thử lại",
-        icon: "warning",
-        dangerMode: true,
-      });
+    editFDAction({ store, fd, biDanh, navigate, setShow })
   };
   const handleEdit = async (e, movie) => {
     UpdateFDAction(e);

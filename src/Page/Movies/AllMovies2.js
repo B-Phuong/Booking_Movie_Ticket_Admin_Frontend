@@ -13,6 +13,7 @@ import EditMovieModal from "../../Components/EditMovieModal/EditMovieModal";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { CSVLink } from "react-csv";
+import { getComingMoviesAction, getShowingMoviesAction } from "../../Redux/Action/MovieActions";
 
 
 export default function AllMovies2() {
@@ -23,23 +24,9 @@ export default function AllMovies2() {
   useEffect(() => {
     if (isComing) {
       //let data = store.lsShowingMovie.ShowingMovie.lsShowingMovie
-      fetch(API_MOVIE.COMING)
-        .then((res) => res.json())
-        .then((dt) => {
-          store.lsComingMovie.ComingMovieDispatch({
-            type: "GETCOMINGMOVIES",
-            payload: dt.data,
-          });
-        });
+      getComingMoviesAction({ store })
     } else {
-      fetch(API_MOVIE.SHOWING)
-        .then((res) => res.json())
-        .then((dt) => {
-          store.lsShowingMovie.ShowingMovieDispatch({
-            type: "GETSHOWINGMOVIES",
-            payload: dt.data,
-          });
-        });
+      getShowingMoviesAction({ store })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isComing]);
@@ -64,7 +51,10 @@ export default function AllMovies2() {
     { label: "Tên phim", key: "tenPhim" },
     { label: "Mô tả", key: "moTa" },
     { label: "Số lượng bán", key: "soLuongBan" },
-    { label: "ngày khởi chiếu", key: "ngayKhoiChieu" }
+    { label: "Ngày khởi chiếu", key: "ngayKhoiChieu" },
+    { label: "Thời lượng", key: "thoiLuong" },
+    { label: "Thể loại", key: "theLoai" },
+    { label: "Quốc gia", key: "quocGia" }
   ];
   const dataExport = data?.map((item) => {
     return { ...item, ngayKhoiChieu: formattedDate(item.ngayKhoiChieu) }
@@ -86,7 +76,7 @@ export default function AllMovies2() {
       minHeight: "100px",
       // selector: row => row.moTa,
       cell: (row) => <td className="organisationname image" >
-        <img height="80px" width="60px" src={row.hinhAnh} alt="" />
+        <img height="80px" width="60px" src={row.hinhAnh} alt={"Không tải được ảnh"} />
       </td >,
     },
     {
@@ -94,7 +84,7 @@ export default function AllMovies2() {
       // selector: row => row.moTa,
       width: "420px",
       cell: (row) => <td>
-        <div className="organisationname-description">{row.moTa}</div>
+        <div className="organisationname-description">{row.moTa == "" ? "Chưa có mô tả" : row.moTa}</div>
       </td>,
     },
     {

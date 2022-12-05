@@ -8,7 +8,7 @@ const ItemUser = ({ index, user }) => {
         {user.tentaiKhoan}
       </td>
       <td className="organisationname image">
-        <img height="80px" width="80px" src={user.anhDaiDien} alt="" />
+        <img height="80px" width="80px" src={user.anhDaiDien} alt={"Không tải được ảnh"} />
       </td>
       <td width="900px">
         <div className="organisationname-description">{user.hoTen}</div>

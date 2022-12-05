@@ -10,6 +10,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty";
 import "../../Page/Movies/MovieManage.css"
+import { addFDAction } from "../../Redux/Action/FDActions";
 function AddFDForm(props) {
   const store = useContext(StoreContext);
   const [image, setDisplayImage] = useState();
@@ -79,43 +80,7 @@ function AddFDForm(props) {
       buttons: false,
     });
     // console.log(">> fd", fd);
-    const token = JSON.parse(localStorage.getItem("token"));
-    let res = await fetch(API_FOODDRINKS.ADD, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: "POST",
-      body: fd,
-    });
-    if (res.status === 401) {
-      swal({
-        title: "Vui lòng đăng nhập lại",
-        text: "Phiên đăng nhập đã hết hạn",
-        icon: "warning",
-        buttons: true,
-      });
-      setTimeout(function () {
-        localStorage.clear();
-        navigate("/signIn");
-      }, 1000);
-    }
-    if (res.status === 200) {
-      swal({
-        title: "Thêm thành công!",
-        text: "",
-        icon: "success",
-        buttons: false,
-      });
-      setTimeout(function () {
-        navigate(0);
-      }, 1000);
-    } else
-      swal({
-        title: "Thêm thất bại",
-        text: "Hãy thử lại",
-        icon: "warning",
-        dangerMode: true,
-      });
+    addFDAction({ store, fd, navigate })
   };
   const handleAdd = async (e, movie) => {
     AddFDAction(e);
@@ -135,14 +100,14 @@ function AddFDForm(props) {
     <div
       style={{
         marginLeft: "40px",
-        background:  "transparent",
+        background: "transparent",
         paddingLeft: "20px",
         marginBottom: "20px",
       }}
     >
       <Form id="create-form">
         <Form.Label style={{ fontWeight: "bold" }}>THÔNG TIN COMBO</Form.Label>
-        <div style={{ background:  "transparent", width: "925px" }}>
+        <div style={{ background: "transparent", width: "925px" }}>
           {/* <Form style={{ maxWidth: "800px" }} noValidate validated={validated} onSubmit={handleEdit}> */}
           <Row className="mb-3">
             <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -167,30 +132,33 @@ function AddFDForm(props) {
               </FloatingLabel>
             </Form.Group>
           </Row>
-          <Form.Group className="mb-3">
-            <Form.Label>Mô tả</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="moTa"
-              rows={4}
-              onChange={(event) => {
-                detailFD.moTa = event.target.value;
-              }}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Ghi chú</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="ghiChu"
-              rows={4}
-              onChange={(event) => {
-                detailFD.ghiChu = event.target.value;
-              }}
-            />
-          </Form.Group>
+          <Row style={{ paddingBottom: "40px" }}>
+            <Form.Group className="col-6">
+              <Form.Label>Mô tả</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="moTa"
+                rows={4}
+                onChange={(event) => {
+                  detailFD.moTa = event.target.value;
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="col-6">
+              <Form.Label>Ghi chú</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="ghiChu"
+                rows={4}
+                onChange={(event) => {
+                  detailFD.ghiChu = event.target.value;
+                }}
+              />
+            </Form.Group>
+          </Row>
+
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="5" controlId="validationCustom04">
               <FloatingLabel
                 controlId="floatingInput"
                 label="Giá tiền (VNĐ)"
@@ -217,7 +185,7 @@ function AddFDForm(props) {
               </FloatingLabel>
             </Form.Group>
 
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="5" controlId="validationCustom04">
               <FloatingLabel
                 controlId="floatingInput"
                 label="Giảm giá (%)"
