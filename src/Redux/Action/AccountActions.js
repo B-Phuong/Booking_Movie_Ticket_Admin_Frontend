@@ -55,3 +55,11 @@ export const signInAction = ({ info, navigate }) => {
         };
     };
 }
+
+export const logOut = ({ store }) => {
+    localStorage.clear();
+    store.account.AccountDispatch({
+        type: "ACCOUNT",
+        payload: localStorage.getItem("taiKhoan"),
+    });
+}

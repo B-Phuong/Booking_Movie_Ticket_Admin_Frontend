@@ -1,6 +1,7 @@
 import { API_USER } from "../../common/ApiController";
-let token = JSON.parse(localStorage.getItem("token"));
+
 export const getAllUserAction = ({ store }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     fetch(API_USER.GET_ALL, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -17,6 +18,7 @@ export const getAllUserAction = ({ store }) => {
         });
 }
 export const getDetailAdminAction = ({ store }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     fetch(API_USER.GET_DETAIL_ADMIN, {
         headers: {
             Authorization: `Bearer ${token}`,
