@@ -11,6 +11,7 @@ import { SIGN_IN } from '../../Redux/Constant/accountConst';
 import { API_ACCOUNTS } from '../../common/ApiController';
 import { useContext } from "react";
 import { StoreContext } from '../../Redux/Store/Store';
+
 export default function SignIn() {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
@@ -78,36 +79,39 @@ export default function SignIn() {
                 icon: "warning",
                 dangerMode: true,
             });
-
-
-
-        // signInAction(info, nagivate)
     }
 
-
     return (
-        <div id="loginform">
-            <h2 id="headerTitle">Đăng nhập</h2>
-            <div>
-                <div className="signin">
-                    <label>Tài khoản</label>
-                    <input type="text" placeholder="Nhập mật khẩu"
-                        onChange={(e) =>
-                            setUserName(e.target.value)
-                        } />
+        <div className="container py-5 h-100">
+            <div className="row d-flex align-items-center justify-content-center h-100">
+                <div className="col-md-8 col-lg-7 col-xl-6">
+                    <img src="https://bizroulette.app/static/media/undraw_unlock_24mb.9b0de180.svg"
+                        className="img-fluid" alt="Không tải được ảnh" />
                 </div>
-                <div className="signin">
-                    <label>Mật khẩu</label>
-                    <input type="password" placeholder="Nhập mật khẩu"
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        } />
-                </div>
-                <div>
-                    <button className="button-custom yes" onClick={() => {
-                        handleClick()
-                        console.log(">> test")
-                    }}>Đồng ý</button>
+                <div id="loginform">
+                    <h2 id="headerTitle">Đăng nhập</h2>
+                    <div>
+                        <div className="signin">
+                            <label>Tài khoản</label>
+                            <input type="text" placeholder="Nhập mật khẩu"
+                                onChange={(e) =>
+                                    setUserName(e.target.value)
+                                } />
+                        </div>
+                        <div className="signin">
+                            <label>Mật khẩu</label>
+                            <input type="password" placeholder="Nhập mật khẩu"
+                                onChange={(e) =>
+                                    setPassword(e.target.value)
+                                } />
+                        </div>
+                        <div>
+                            <button className="button-custom yes" onClick={() => {
+                                handleClick()
+                                console.log(">> test")
+                            }}>Đồng ý</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

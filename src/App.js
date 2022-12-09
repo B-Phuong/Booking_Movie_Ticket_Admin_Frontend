@@ -11,6 +11,7 @@ import AdminMovies from "./Page/AdminMovies";
 import AdminFoodDrinks from "./Page/AdminFoodsDrinks";
 import Header from "./Components/Header/HeaderAdmin";
 
+
 function App() {
   const store = useContext(StoreContext);
   useEffect(() => {
