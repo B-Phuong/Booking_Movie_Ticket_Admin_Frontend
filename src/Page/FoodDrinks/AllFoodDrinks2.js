@@ -12,13 +12,13 @@ import "react-data-table-component-extensions/dist/index.css";
 import { CSVLink } from "react-csv";
 import DataTable from "react-data-table-component";
 import { getAllFDsAction } from "../../Redux/Action/FDActions";
+import { SearchBar } from "../../Components/SearchBar/SearchBar";
 
 export default function AllFoodDrinks2() {
   const store = useContext(StoreContext);
-  const [biDanh, setBiDanh] = useState();
+  const [filterText, setFilterText] = React.useState('');
 
   // console.log(">>ID in AllFoodsDrinks", biDanh);
-
   useEffect(() => {
     getAllFDsAction({ store })
 
@@ -28,7 +28,7 @@ export default function AllFoodDrinks2() {
   let fooddrinks = store.fooddrinks.LsFDs?.listFDs;
 
   const data = fooddrinks
-  console.log(">> fooddrinks", data)
+  // console.log(">> fooddrinks", data)
   const formattedDate = (dateInput) => {
     let today = new Date(dateInput);
     const yyyy = today.getFullYear();
@@ -136,54 +136,50 @@ export default function AllFoodDrinks2() {
       },
     },
   };
+  const paginationOptions = {
+    rowsPerPageText: 'Số dòng mỗi trang',
+    rangeSeparatorText: 'trên',
+  };
+  let filteredItems = data?.filter(
+    item => item?.tenCombo && item?.tenCombo.toLowerCase().includes(filterText.toLowerCase()),
+  );
   // console.log(">> FOODDRINKS", fooddrinks);
   if (fooddrinks) {
     return (
       <>
         <div style={{ minWidth: "925px" }}>
+
           <div style={{ padding: "0em 3em 3em 3em" }}>
+            <h5><strong>Danh sách combo</strong></h5>
             {fooddrinks.length == 0 ? (
               <div className="container-body" style={{ overflowY: "hidden" }}>
-                <div style={{ color: "white", marginTop: "1em" }}>
+                <div style={{ marginTop: "1em" }}>
                   Hiện chưa có thông tin đồ ăn và thức uống!
                 </div>
               </div>
             ) : (
-              // <div className="container-body">
-              //   <table className="layout display responsive-table">
-              //     <thead>
-              //       <tr>
-              //         <th>Số thứ tự</th>
-              //         <th>Tên combo</th>
-              //         <th>Hình ảnh</th>
-              //         <th colSpan={2}>Mô tả</th>
-              //       </tr>
-              //     </thead>
-              //     <tbody>
-              //       {fooddrinks.map((item, index) => (
-              //         <ItemFoodDrink fooddrinks={item} index={index} />
-              //       ))}
-              //     </tbody>
-              //   </table>
-              // </div>
               <div style={{ border: "1px solid #B3BFAA" }}>
                 <div style={{ padding: "18px 0px 0px 18px", backgroundColor: "#242f40" }}>
                   <CSVLink data={dataa} headers={headers} filename={"danhSachCombo.csv"}>
                     <i className="fa fa-file-export fa-lg" style={{ color: "#b5c4a9", fontSize: "16px" }}>CSV</i>
                   </CSVLink>
                 </div>
-
-                <DataTableExtensions export={false} print={false} columns={columns} data={data}>
+                <SearchBar onFilter={e => setFilterText(e.target.value)}
+                  filterText={filterText}
+                  placeholder="Nhập tên combo" />
+                <div className="container-body">
                   <DataTable
                     columns={columns}
-                    data={data}
+                    data={filteredItems}
                     customStyles={customStyles}
                     pagination
                     paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                    paginationPerPage="5"
                     highlightOnHover
+                    paginationComponentOptions={paginationOptions}
+                    noDataComponent="Không tìm thấy thông tin"
                   />
-                </DataTableExtensions>
-
+                </div>
               </div>
             )}
           </div>

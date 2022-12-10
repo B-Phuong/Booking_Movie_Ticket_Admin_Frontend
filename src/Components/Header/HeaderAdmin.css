@@ -12,7 +12,7 @@
   box-sizing: border-box;
 } */
 
-header {
+#navbar {
   align-items: center;
   background: var(--color-dark-blue);
   /* border-radius: 0 0 15px 15px; */
@@ -27,18 +27,18 @@ header {
   transition: top 0.3s;
 }
 
-header>div {
+#navbar>div {
   align-items: center;
   color: var(--color-dark-yellow);
   display: flex;
 }
 
-header>div>span,
-header>div>i {
+#navbar>div>span,
+#navbar>div>i {
   font-size: 42px;
 }
 
-header>div>span {
+#navbar>div>span {
   padding-left: 8px;
 }
 

@@ -14,7 +14,7 @@ const HeaderAdmin = () => {
   }, [store.accounts.userAccount.account]);
   return (
     <>
-      <header id="navbar" style={{ top: "0px" }}>
+      <div id="navbar" style={{ top: "0px", height: "60px" }}>
         <nav class="close">
           {console.log(">> TEST HEADER")}
           <i class="bx bx-user-circle"></i>
@@ -24,7 +24,7 @@ const HeaderAdmin = () => {
         </nav>
         <i class="bx bx-menu"></i>
 
-      </header>
+      </div>
     </>
   )
 }

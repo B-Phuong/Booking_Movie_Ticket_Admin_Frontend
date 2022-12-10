@@ -35,10 +35,11 @@ function App() {
         {/* <HeaderAdmin /> */}
 
         <Routes>
-          <Route path="/" element={<SignIn />} />
-          {/* <Route path="/" element={<Home />} /> */}
 
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<SignIn />} />
           <Route element={<PrivateAdminRoutes />}>
+
             <Route path="/Admin/*" element={<AdminMenu />} />
           </Route>
         </Routes>

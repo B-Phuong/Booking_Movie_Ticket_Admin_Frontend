@@ -11,13 +11,14 @@ import { CSVLink } from "react-csv";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import { getAllUserAction } from "../../Redux/Action/UserActions";
+import { SearchBar } from "../../Components/SearchBar/SearchBar";
 
 export default function AllUsers2() {
   const store = useContext(StoreContext);
   const [biDanh, setBiDanh] = useState();
   // console.log(">>ID in AllUsers", biDanh);
   let token = JSON.parse(localStorage.getItem("token"));
-
+  const [filterText, setFilterText] = React.useState('');
   useEffect(() => {
     getAllUserAction({ store })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,7 +26,7 @@ export default function AllUsers2() {
 
   let users = store.users.listUsers?.users;
   const data = users
-  console.log(">> data", data)
+  // console.log(">> data", data)
   const formattedDate = (dateInput) => {
     let today = new Date(dateInput);
     const yyyy = today.getFullYear();
@@ -88,7 +89,6 @@ export default function AllUsers2() {
       name: 'Thao tác',
       width: "120px",
       cell: (row) => <td className="actions">
-        {console.log(">>. thao tác", row)}
         <InfoUserModal tenTaiKhoan={row.tentaiKhoan} show={false} />
       </td>,
       ignoreRowClick: true,
@@ -137,14 +137,24 @@ export default function AllUsers2() {
       },
     },
   };
-  // console.log(">> users", users);
+
+  const paginationOptions = {
+    rowsPerPageText: 'Số dòng mỗi trang',
+    rangeSeparatorText: 'trên',
+  };
+  let filteredItems = data?.filter(
+    item => item?.hoTen && item?.hoTen.toLowerCase().includes(filterText?.toLowerCase())
+      || item?.email && item?.email.toLowerCase().includes(filterText?.toLowerCase())
+      || item?.hoTen && item?.hoTen.toLowerCase().includes(filterText?.toLowerCase())
+  );
   if (users) {
     return (
       <>
         <div style={{ minWidth: "925px" }}>
           <div style={{ padding: "0em 3em 3em 3em" }}>
+            <h5><strong>Danh sách người dùng</strong></h5>
             {users.length == 0 ? (
-              <div style={{ color: "white", marginTop: "1em" }}>
+              <div style={{ marginTop: "1em" }}>
                 Hiện chưa có người dùng nào!
               </div>
             ) : (
@@ -154,17 +164,23 @@ export default function AllUsers2() {
                     <i className="fa fa-file-export fa-lg" style={{ color: "#b5c4a9", fontSize: "16px" }}> CSV</i>
                   </CSVLink>
                 </div>
-                <DataTableExtensions export={false} print={false} columns={columns} data={data}>
+                <SearchBar onFilter={e => setFilterText(e.target.value)}
+                  filterText={filterText}
+                  placeholder="Nhập tên tài khoản, họ tên hoặc email" />
+
+                <div className="container-body">
                   <DataTable
                     columns={columns}
-                    data={data}
+                    data={filteredItems}
                     customStyles={customStyles}
                     pagination
                     paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                    paginationPerPage="5"
                     highlightOnHover
+                    paginationComponentOptions={paginationOptions}
+                    noDataComponent="Không tìm thấy thông tin"
                   />
-                </DataTableExtensions>
-
+                </div>
               </div>
             )}
           </div>

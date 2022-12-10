@@ -8,7 +8,7 @@ import TimeLineChart from "../../Components/Charts/TimeLineChart";
 
 export default function ChartsArea() {
   return (
-    <>
+    <div class="chart-area">
       <BoxChart />
       <div
         style={{
@@ -33,6 +33,6 @@ export default function ChartsArea() {
 
       {/* </div> */}
       {/* </div> */}
-    </>
+    </div>
   );
 }

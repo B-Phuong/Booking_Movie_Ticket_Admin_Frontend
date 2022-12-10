@@ -121,6 +121,7 @@ export default function Showtimes() {
                                   name="Thu gọn"
                                   background="pink"
                                   width="fit-content"
+                                  height="34px"
                                   borderRadius="10.2em"
                                   fontWeight="bold"
                                   onClick={(event) =>
@@ -133,6 +134,7 @@ export default function Showtimes() {
                                   name="Hiển thị"
                                   background="pink"
                                   width="fit-content"
+                                  height="34px"
                                   borderRadius="10.2em"
                                   fontWeight="bold"
                                   onClick={(event) =>
@@ -164,7 +166,7 @@ export default function Showtimes() {
                                     if (item.tenCumRap._id == theater._id) {
                                       return (
                                         <>
-                                          <h5>{item.tenRap.tenRap}</h5>
+                                          <h5 style={{ color: "rgb(31, 166, 245)", fontWeight: "600" }}>{item.tenRap.tenRap}</h5>
                                           <div className="row">
                                             <div className="col-md-6">
                                               <li>
@@ -229,10 +231,11 @@ export default function Showtimes() {
                                                   {" "}
                                                   {item.gheDaChon.length}/80
                                                   <Button
-                                                    color="white"
-                                                    name="Xóa"
-                                                    background="rgb(31, 166, 245)"
-                                                    width="fit-content"
+                                                    color="black"
+                                                    name={<i className="fa fa-trash"></i>}
+                                                    background="pink"
+                                                    width="30px"
+                                                    height="30px"
                                                     borderRadius="10.2em"
                                                     fontWeight="bold"
                                                     onClick={(e) => {

@@ -145,26 +145,24 @@ function EditFDModal(props) {
     <div style={{ display: "flex" }}>
       <Button
         color="black"
-        name="Chi tiết"
+        name={<i className="fa fa-info fa-lg"></i>}
         background="pink"
         width="fit-content"
+        padding="4px 8px"
         borderRadius="10.2em"
         fontWeight="bold"
         onClick={() => handleClick(props.biDanh)}
       />
-      <NavLink end to={""}>
-        <Button
-          margin="0px 4px"
-          color="red"
-          name="Xóa"
-          height="48px"
-          background="pink"
-          width="fit-content"
-          borderRadius="10.2em"
-          fontWeight="bold"
-          onClick={() => handleDelete()}
-        />
-      </NavLink>
+      <Button
+        color="black"
+        name={<i className="fa fa-trash"></i>}
+        background="pink"
+        width="fit-content"
+        padding="4px 8px"
+        borderRadius="10.2em"
+        fontWeight="bold"
+        onClick={handleDelete}
+      />
       <Form
         id="edit-form"
         style={{ maxWidth: "800px" }}

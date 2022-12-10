@@ -21,11 +21,11 @@ const BoxChart = () => {
     getStaticAction({ store })
   }, []);
 
-  const Card = ({ label, number, icon }) => {
+  const Card = ({ label, number, icon, link }) => {
     return (
       <div className="col-xl-3 col-lg-6">
-        <div className="stati card card-stats mb-4 mb-xl-0" style={{ background: "transparent", borderRadius: "1rem" }}>
-          <div className="card-body" style={{ borderStyle: "dashed", borderRadius: "1rem", height: "118px" }}>
+        <div className="stati card card-stats mb-4 mb-xl-0" style={{ background: "transparent", borderRadius: "1rem", cursor: "pointer" }}>
+          <div className="card-body" style={{ borderStyle: "dashed", borderRadius: "1rem", height: "118px" }} onClick={() => navigate(link)}>
             <div className="row">
               <div className="col">
                 <h6 className="card-title text-uppercase text-muted mb-0" style={{ color: "#242f40" }}>
@@ -54,10 +54,10 @@ const BoxChart = () => {
   return (
     <div className="row" style={{ paddingLeft: "20px" }}>
 
-      <Card label="Số tài khoản khách" number={sumOfAccounts} icon="fa fa-users fa-lg" />
-      <Card label="Số phim đang chiếu" number={sumOfShowingMovies} icon="fa fa-film fa-lg" />
-      <Card label="Số phim sắp chiếu" number={sumOfComingMovies} icon="fa fa-file-video fa-lg" />
-      <Card label={`Doanh thu năm ${new Date().getFullYear()}`} number={statisticalByYear.toLocaleString(
+      <Card label="Số tài khoản khách" number={sumOfAccounts} icon="fa fa-users fa-lg" link="/Admin/Users" />
+      <Card label="Số phim đang chiếu" number={sumOfShowingMovies} icon="fa fa-film fa-lg" link="/Admin/Movies" />
+      <Card label="Số phim sắp chiếu" number={sumOfComingMovies} icon="fa fa-file-video fa-lg" link="/Admin/Movies" />
+      <Card label={`Doanh thu năm ${new Date().getFullYear()}`} number={statisticalByYear?.toLocaleString(
         "it-IT",
         {
           style: "currency",

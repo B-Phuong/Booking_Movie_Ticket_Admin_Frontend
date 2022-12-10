@@ -14,13 +14,14 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { CSVLink } from "react-csv";
 import { getComingMoviesAction, getShowingMoviesAction } from "../../Redux/Action/MovieActions";
+import { SearchBar } from "../../Components/SearchBar/SearchBar";
 
 
 export default function AllMovies2() {
   const store = useContext(StoreContext);
   const [biDanh, setBiDanh] = useState();
   const [isComing, setIsComing] = useState(true);
-
+  const [filterText, setFilterText] = React.useState('');
   useEffect(() => {
     if (isComing) {
       //let data = store.lsShowingMovie.ShowingMovie.lsShowingMovie
@@ -51,6 +52,7 @@ export default function AllMovies2() {
     { label: "Tên phim", key: "tenPhim" },
     { label: "Mô tả", key: "moTa" },
     { label: "Số lượng bán", key: "soLuongBan" },
+    { label: "Đánh giá", key: "danhGia" },
     { label: "Ngày khởi chiếu", key: "ngayKhoiChieu" },
     { label: "Thời lượng", key: "thoiLuong" },
     { label: "Thể loại", key: "theLoai" },
@@ -59,7 +61,7 @@ export default function AllMovies2() {
   const dataExport = data?.map((item) => {
     return { ...item, ngayKhoiChieu: formattedDate(item.ngayKhoiChieu) }
   })
-  const dataa = dataExport
+  console.log(">> isComing", isComing)
   const columns = [
     {
       name: 'Tên phim',
@@ -82,7 +84,7 @@ export default function AllMovies2() {
     {
       name: 'Mô tả',
       // selector: row => row.moTa,
-      width: "420px",
+      width: "320px",
       cell: (row) => <td>
         <div className="organisationname-description">{row.moTa == "" ? "Chưa có mô tả" : row.moTa}</div>
       </td>,
@@ -92,15 +94,26 @@ export default function AllMovies2() {
       selector: row => row.soLuongBan,
       sortable: true,
       width: "fit-content",
-      cell: (row) => {
-        !isComing ? (<td>
-          <div className="organisationname" style={{ width: "80px", textAlign: "center" }}>{row.soLuongBan}</div>
-        </td>) : <></>
-      },
+      cell: (row) => (
+        !isComing ? <td>
+          <div className="organisationname" style={{ minWidth: "80px", textAlign: "center" }}>{row.soLuongBan}</div>
+        </td> : <></>
+      ),
+    },
+    {
+      name: !isComing ? 'Đánh giá' : "",
+      selector: row => row.danhGia,
+      sortable: true,
+      width: "fit-content",
+      cell: (row) => (
+        !isComing ? <td>
+          <div className="organisationname" style={{ minWidth: "70px", textAlign: "center" }}>{Number(row.danhGia)}</div>
+        </td> : <></>
+      )
     },
     {
       name: 'Thao tác',
-      width: "140px",
+      width: "fit-content",
       cell: (row) => <td className="actions">
         <EditMovieModal biDanh={row.biDanh} show={false} coming={isComing} />
       </td>,
@@ -150,13 +163,19 @@ export default function AllMovies2() {
       },
     },
   };
-
+  const paginationOptions = {
+    rowsPerPageText: 'Số dòng mỗi trang',
+    rangeSeparatorText: 'trên',
+  };
+  let filteredItems = data?.filter(
+    item => item?.tenPhim && item?.tenPhim.toLowerCase().includes(filterText.toLowerCase()),
+  );
   if (data) {
     return (
       <>
-        <div>
+        <div style={{ minWidth: "925px" }}>
           <div style={{ padding: "0em 3em 3em 3em" }}>
-            <div className="row">
+            <div className="row" style={{ marginBottom: "20px" }}>
               <div className="col-md-4">
                 <button
                   className="button-custom no"
@@ -182,11 +201,11 @@ export default function AllMovies2() {
                 </button>
               </div>
             </div>
+            <h5><strong>Danh sách phim</strong></h5>
             {movies.length == 0 ? (
               <div className="container-body" style={{ overflowY: "hidden" }}>
                 <div
                   style={{
-                    color: "white",
                     marginTop: "1em",
                     minWidth: "917px",
                   }}
@@ -197,26 +216,28 @@ export default function AllMovies2() {
             ) : (
               <div style={{ border: "1px solid #B3BFAA" }}>
                 <div style={{ padding: "18px 0px 0px 18px", backgroundColor: "#242f40" }}>
-                  <CSVLink data={dataa} headers={headers} filename={"danhSachPhim.csv"}>
+                  <CSVLink data={dataExport} headers={headers} filename={"danhSachPhim.csv"}>
                     <i className="fa fa-file-export fa-lg" style={{ color: "#b5c4a9", fontSize: "16px" }}> CSV</i>
                   </CSVLink>
                 </div>
-                <DataTableExtensions export={false} print={false} columns={columns} data={data}>
+                <SearchBar onFilter={e => setFilterText(e.target.value)}
+                  filterText={filterText}
+                  placeholder="Nhập tên phim" />
+                <div className="container-body">
                   <DataTable
                     columns={columns}
-                    data={data}
+                    data={filteredItems}
                     customStyles={customStyles}
                     pagination
                     paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                    paginationPerPage="5"
                     highlightOnHover
+                    paginationComponentOptions={paginationOptions}
+                    noDataComponent="Không tìm thấy thông tin"
                   />
-                </DataTableExtensions>
-
+                </div>
               </div>
             )}
-
-
-
           </div>
         </div >
       </>

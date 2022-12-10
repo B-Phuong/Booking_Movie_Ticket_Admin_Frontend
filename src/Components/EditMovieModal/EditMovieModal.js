@@ -11,7 +11,8 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { useNavigate } from "react-router-dom";
 import { List } from "react-content-loader";
 import { deleteMovieAction, editMovieAction } from "../../Redux/Action/MovieActions";
-
+import { GiTheaterCurtains, IconName } from "react-icons/gi";
+import { FaTheaterMasks } from "react-icons/fa";
 function EditMovieModal(props) {
   const [isShow, setInvokeModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -164,9 +165,10 @@ function EditMovieModal(props) {
     <div style={{ display: "flex" }}>
       <Button
         color="black"
-        name="Chi tiết"
+        name={<i className="fa fa-info fa-lg"></i>}
         background="pink"
         width="fit-content"
+        padding="4px 8px"
         borderRadius="10.2em"
         fontWeight="bold"
         onClick={() => handleClick(props.biDanh)}
@@ -174,22 +176,30 @@ function EditMovieModal(props) {
       <NavLink end to={`/Admin/Movies/${props.biDanh}/showtimes`}>
         <Button
           margin="0px 4px"
-          color="red"
-          name="Lịch chiếu"
+          color="black"
+          name={<FaTheaterMasks size={"20px"} />}
           background="pink"
           width="fit-content"
+          padding="4px 8px"
           borderRadius="10.2em"
           fontWeight="bold"
         />
       </NavLink>
       {
         props.coming ?
-          <button style={{
-            border: "none", background: "transparent"
-          }} onClick={handleDelete}><i className="fa fa-trash"></i></button>
+          <Button
+            margin="0px 4px"
+            color="black"
+            name={<i className="fa fa-trash"></i>}
+            background="pink"
+            width="fit-content"
+            padding="4px 8px"
+            borderRadius="10.2em"
+            fontWeight="bold"
+            onClick={handleDelete}
+          />
           : ""
       }
-
       <Form
         id="edit-form"
         style={{ maxWidth: "800px" }}
@@ -361,6 +371,21 @@ function EditMovieModal(props) {
                         />
                       </FloatingLabel>
                     </Form.Group>
+                    <Form.Group as={Col} md="3" controlId="validationCustom04">
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Đánh giá"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          type="number"
+                          min={0}
+                          value={data.detailMovie?.danhGia}
+
+                          readOnly
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
                     <div className="row">
                       <div className="col-md-5">
                         Thể loại
@@ -428,7 +453,7 @@ function EditMovieModal(props) {
                         name="banner"
                         md="6"
                       />
-                      <Card style={{ alignItems: "center" }}>
+                      <Card style={{ alignItems: "center", background: "transparent" }}>
                         <Card.Img
                           style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                           variant="top"
@@ -449,7 +474,7 @@ function EditMovieModal(props) {
                           uploadImage(event);
                         }}
                       />
-                      <Card style={{ alignItems: "center" }}>
+                      <Card style={{ alignItems: "center", background: "transparent" }}>
                         <Card.Img
                           style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                           variant="top"

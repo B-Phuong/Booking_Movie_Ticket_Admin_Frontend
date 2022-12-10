@@ -1,7 +1,7 @@
 .container-body {
-    margin-top: 1em;
-    overflow-y: scroll;
-    max-height: 44em;
+    /* margin-top: 1em; */
+    overflow-y: auto;
+    max-height: 60em;
     max-width: 925px;
     /* max-width: 1200px; */
 }
@@ -125,8 +125,30 @@ table.responsive-table {
     }
 }
 
+@media only screen and (min-width: 1200px) {}
+
+@media only screen and (min-width: 1700px) {
+    .container-body {
+        max-width: 100%
+    }
+
+    .grtMwe {
+        font-size: 20px !important;
+    }
+
+    .imnTHI {
+        font-size: 18px !important;
+    }
+
+    .organisationname-description {
+        font-size: 18px !important;
+    }
+}
+
+
 
 /* CSS */
+/*
 .button-custom.yes {
     align-items: center;
     appearance: none;
@@ -207,3 +229,5 @@ table.responsive-table {
     padding: 18px 0px 0px 18px;
     background-color: #242f40;
 }
+
+*/

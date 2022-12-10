@@ -1,0 +1,60 @@
+form {
+    width: 100%
+}
+
+/* Large devices (laptops/desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    form {
+        width: 100%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1700px and up) */
+@media only screen and (min-width: 1700px) {
+    .general {
+        margin-left: 100px;
+        width: 1400px
+    }
+
+    .general>div {
+        margin-left: 100px;
+        width: 1400px
+    }
+
+    body {
+        font-size: 20px;
+    }
+
+    form {
+        width: 1400px;
+        font-size: 20px;
+    }
+
+    #create-form>div {
+        min-width: 1400px;
+        font-size: 20px;
+    }
+
+    .d-grid.gap-2.col-6.mx-auto {
+        display: flex !important;
+        margin-top: 40px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #edit-form {
+        width: 100%;
+    }
+
+    .modal-content {
+        min-width: 1000px
+    }
+
+    textarea.form-contro {
+        min-width: 1000px
+    }
+
+    .chart-area {
+        margin-left: 100px;
+    }
+}

@@ -73,11 +73,11 @@ function InfoUserModal(props) {
   return (
     <div style={{ display: "flex" }}>
       <Button
-        height="48px"
         color="black"
-        name="Chi tiết"
+        name={<i className="fa fa-info fa-lg"></i>}
         background="pink"
         width="fit-content"
+        padding="4px 8px"
         borderRadius="10.2em"
         fontWeight="bold"
         onClick={() => handleClick(props.tenTaiKhoan)}

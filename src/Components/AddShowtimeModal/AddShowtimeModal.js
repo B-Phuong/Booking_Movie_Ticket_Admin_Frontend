@@ -135,12 +135,12 @@ function AddShowtimeModal(props) {
   var tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
   return (
-    <div style={{ display: "flex" }}>
+    <div>
       <Button
         color="black"
         name="Thêm lịch chiếu"
         background="pink"
-        width="fit-content"
+        height="34px"
         borderRadius="10.2em"
         fontWeight="bold"
         onClick={initModal}

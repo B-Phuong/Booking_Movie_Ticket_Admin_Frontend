@@ -103,14 +103,15 @@ function AddFDForm(props) {
         background: "transparent",
         paddingLeft: "20px",
         marginBottom: "20px",
+        width: "100%"
       }}
     >
       <Form id="create-form">
         <Form.Label style={{ fontWeight: "bold" }}>THÔNG TIN COMBO</Form.Label>
-        <div style={{ background: "transparent", width: "925px" }}>
+        <div style={{ background: "transparent", width: "100%" }}>
           {/* <Form style={{ maxWidth: "800px" }} noValidate validated={validated} onSubmit={handleEdit}> */}
           <Row className="mb-3">
-            <Form.Group as={Col} md="6" controlId="validationCustom01">
+            <Form.Group as={Col} md="5" controlId="validationCustom01">
               <FloatingLabel
                 controlId="floatingInput"
                 label="Tên combo"
@@ -133,7 +134,7 @@ function AddFDForm(props) {
             </Form.Group>
           </Row>
           <Row style={{ paddingBottom: "40px" }}>
-            <Form.Group className="col-6">
+            <Form.Group className="col-5">
               <Form.Label>Mô tả</Form.Label>
               <Form.Control
                 as="textarea"
@@ -144,7 +145,7 @@ function AddFDForm(props) {
                 }}
               />
             </Form.Group>
-            <Form.Group className="col-6">
+            <Form.Group className="col-5">
               <Form.Label>Ghi chú</Form.Label>
               <Form.Control
                 as="textarea"
@@ -210,7 +211,7 @@ function AddFDForm(props) {
           </Row>
           <Row className="mb-3">
             <Form.Group
-              style={{ width: "18rem" }}
+              style={{ width: "24rem" }}
               controlId="validationCustom05"
             >
               <Form.Label>Hình ảnh</Form.Label>
@@ -223,7 +224,7 @@ function AddFDForm(props) {
                   uploadImage(event);
                 }}
               />
-              <Card style={{ alignItems: "center" }}>
+              <Card style={{ alignItems: "center", background: "transparent" }}>
                 <Card.Img
                   style={{
                     maxHeight: "8rem",

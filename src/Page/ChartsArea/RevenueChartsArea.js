@@ -8,7 +8,7 @@ import TimeLineChart from "../../Components/Charts/TimeLineChart";
 
 export default function RevenueChartsArea() {
   return (
-    <>
+    <div class="chart-area">
       <RevenueBoxChart />
       {/* <div className="row">
         <div className="col-md-6 col-xl-6"> */}
@@ -32,11 +32,6 @@ export default function RevenueChartsArea() {
         10 khách hàng tiềm năng
       </div>
       <BarChart />
-
-
-
-      {/* </div> */}
-      {/* </div> */}
-    </>
+    </div>
   );
 }

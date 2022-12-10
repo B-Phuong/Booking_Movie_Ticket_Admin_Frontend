@@ -23,7 +23,6 @@ export default function SignIn() {
             taiKhoan: userName,
             matKhau: password
         }
-        console.log(">> info", info)
         swal({
             icon: "info",
             title: "Xin chờ giây lát",
@@ -37,7 +36,6 @@ export default function SignIn() {
             body: JSON.stringify(info),
         })
         let dataUser = await res.json();
-        console.log(">> res in then", dataUser)
         if (res.status === 200) {
             swal({
                 title: "Đăng nhập thành công!",
@@ -63,7 +61,7 @@ export default function SignIn() {
                 payload: localStorage.getItem("taiKhoan"),
             });
             if (JSON.parse(localStorage.getItem("maLoaiNguoiDung")) === "0") {
-                navigate("/Admin/Movies");
+                setTimeout(() => { navigate("/Admin/Movies") }, 1000);
             }
             else swal({
                 title: "Bạn không có quyền truy cập!",
@@ -80,12 +78,11 @@ export default function SignIn() {
                 dangerMode: true,
             });
     }
-
     return (
         <div className="container py-5 h-100">
             <div className="row d-flex align-items-center justify-content-center h-100">
                 <div className="col-md-8 col-lg-7 col-xl-6">
-                    <img src="https://bizroulette.app/static/media/undraw_unlock_24mb.9b0de180.svg"
+                    <img src="admin-signin.svg"
                         className="img-fluid" alt="Không tải được ảnh" />
                 </div>
                 <div id="loginform">
@@ -106,9 +103,8 @@ export default function SignIn() {
                                 } />
                         </div>
                         <div>
-                            <button className="button-custom yes" onClick={() => {
+                            <button style={{ margin: "20px 0px 20px 120px" }} className="button-custom yes" onClick={() => {
                                 handleClick()
-                                console.log(">> test")
                             }}>Đồng ý</button>
                         </div>
                     </div>

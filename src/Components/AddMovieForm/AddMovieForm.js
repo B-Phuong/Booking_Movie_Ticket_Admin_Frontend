@@ -234,7 +234,7 @@ function AddMovieForm(props) {
                     //checkValid(event);
                     //setDetailMovie({ ...detailMovie, theLoai: event });
                     detailMovie.theLoai = event;
-                    console.log(">>  detailMovie.theLoai", detailMovie.theLoai)
+                    // console.log(">>  detailMovie.theLoai", detailMovie.theLoai)
                   }}
                   options={[
                     "Kinh dị",
@@ -277,8 +277,8 @@ function AddMovieForm(props) {
           <Row className="mb-3">
             <Form.Group
               as={Col}
-              md="3"
-              style={{ width: "20rem" }}
+              md="5"
+              // style={{ width: "20rem" }}
               controlId="validationCustom05"
             >
               <Form.Label>Ảnh bìa</Form.Label>
@@ -294,7 +294,7 @@ function AddMovieForm(props) {
                 required
                 md="6"
               />
-              <Card style={{ alignItems: "center" }}>
+              <Card style={{ alignItems: "center", background: "transparent" }}>
                 <Card.Img
                   style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                   variant="top"
@@ -307,8 +307,8 @@ function AddMovieForm(props) {
             </Form.Group>
             <Form.Group
               as={Col}
-              md="3"
-              style={{ width: "18rem" }}
+              md="5"
+              // style={{ width: "18rem" }}
               controlId="validationCustom05"
             >
               <Form.Label>Hình ảnh</Form.Label>
@@ -322,7 +322,7 @@ function AddMovieForm(props) {
                   uploadImage(event);
                 }}
               />
-              <Card style={{ alignItems: "center" }}>
+              <Card style={{ alignItems: "center", background: "transparent" }}>
                 <Card.Img
                   style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                   variant="top"
