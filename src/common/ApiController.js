@@ -43,6 +43,7 @@ export const API_FOODDRINKS = {
   DETAIL: API_DOMAIN + "users/food_drink/",
   UPDATE: API_DOMAIN + "admins/food_drink/",
   ADD: API_DOMAIN + "admins/food_drink",
+  DELETE: API_DOMAIN + "admins/food_drink/",
 };
 
 export const API_BOOKING = {
@@ -52,4 +53,6 @@ export const API_BOOKING = {
 export const API_CHARTS = {
   GETREVENUE: API_DOMAIN + "admins/revenue",
   GETTICKETS: API_DOMAIN + "admins/ticketBookings",
+  GET_REVENUE_BY_THEATER: API_DOMAIN + "admins/revenueByTheater",
+  GET_TIMELINE_SHOWTIME: API_DOMAIN + "admins/timelineChart",
 };

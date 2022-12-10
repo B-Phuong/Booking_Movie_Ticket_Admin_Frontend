@@ -2,7 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "../App.css";
 import { Link, NavLink } from "react-router-dom";
-import ChartArea from "./ChartsArea/ChartsArea";
+import RevenueChartsArea from "./ChartsArea/RevenueChartsArea";
+import ChartsArea from "./ChartsArea/ChartsArea";
 
 export default function AdminCharts() {
     return (
@@ -10,7 +11,9 @@ export default function AdminCharts() {
         /* <HeaderAdmin /> */
         <div style={{ marginTop: "1em" }}>
             <Routes>
-                <Route path="/" element={<ChartArea />} />
+                <Route path="/" element={<ChartsArea />} />
+                <Route path="/Revenue" element={<RevenueChartsArea />} />
+
             </Routes>
         </div>
     );

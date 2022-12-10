@@ -10,7 +10,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { List } from "react-content-loader";
 import isEmpty from "validator/lib/isEmpty";
-import { editFDAction, getDetailFDAction } from "../../Redux/Action/FDActions";
+import { deleteFDAction, editFDAction, getDetailFDAction } from "../../Redux/Action/FDActions";
 
 function EditFDModal(props) {
   const [isShow, setShow] = useState(false);
@@ -128,6 +128,19 @@ function EditFDModal(props) {
       setDisplayImage(url);
     }
   };
+  const handleDelete = () => {
+    swal("Bạn chắc chắn muốn xóa combo này?", {
+      buttons: ["Hủy", "Đồng ý"],
+    }).then((value) => {
+      switch (value) {
+        case true:
+          deleteFDAction({ store, props, navigate });
+          break;
+        default:
+          return;
+      }
+    });
+  }
   return (
     <div style={{ display: "flex" }}>
       <Button
@@ -149,6 +162,7 @@ function EditFDModal(props) {
           width="fit-content"
           borderRadius="10.2em"
           fontWeight="bold"
+          onClick={() => handleDelete()}
         />
       </NavLink>
       <Form

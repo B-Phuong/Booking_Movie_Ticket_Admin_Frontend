@@ -112,4 +112,43 @@ export const getAllFDsAction = async ({ store }) => {
                 payload: dt.data,
             });
         });
-} 
+}
+
+export const deleteFDAction = async ({ store, props, navigate }) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log(">> props", props.biDanh)
+    let res = await fetch(API_FOODDRINKS.DELETE + props.biDanh, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        method: "DELETE",
+    });
+    if (res.status === 401) {
+        swal({
+            title: "Vui lòng đăng nhập lại",
+            text: "Phiên đăng nhập đã hết hạn",
+            icon: "warning",
+            buttons: true,
+        });
+        setTimeout(function () {
+            localStorage.clear();
+            navigate("/signIn");
+        }, 1000);
+    }
+    if (res.status === 200) {
+        swal({
+            title: "Xóa combo thành công!",
+            text: "",
+            icon: "success",
+            buttons: false,
+        });
+
+    } else
+        swal({
+            title: "Xóa combo thất bại",
+            text: "Hãy thử lại",
+            icon: "warning",
+            dangerMode: true,
+        });
+}

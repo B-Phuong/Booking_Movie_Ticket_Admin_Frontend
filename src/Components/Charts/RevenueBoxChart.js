@@ -5,20 +5,16 @@ import { StoreContext } from "../../Redux/Store/Store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_USER } from "../../common/ApiController";
-import { getStaticAction } from "../../Redux/Action/ChartActions";
+import { getRevenueByTheater, getStaticAction } from "../../Redux/Action/ChartActions";
 import './Chart.css';
-import { getAllUserAction } from "../../Redux/Action/UserActions";
 import { getComingMoviesAction, getShowingMoviesAction } from "../../Redux/Action/MovieActions";
-const BoxChart = () => {
+const RevenueBoxChart = () => {
   const store = useContext(StoreContext);
   let token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
   useEffect(() => {
     //GetStaticAction()
-    getAllUserAction({ store })
-    getShowingMoviesAction({ store })
-    getComingMoviesAction({ store })
-    getStaticAction({ store })
+    getRevenueByTheater({ store })
   }, []);
 
   const Card = ({ label, number, icon }) => {
@@ -47,24 +43,23 @@ const BoxChart = () => {
         </div>
       </div>)
   }
-  let statisticalByYear = store.ticketBooking.GetStatisticalByYear?.total
-  let sumOfAccounts = store.users.listUsers?.users?.length;
-  let sumOfShowingMovies = store.lsShowingMovie.ShowingMovie?.listMovie?.length;
-  let sumOfComingMovies = store.lsComingMovie.ComingMovie?.listMovie?.length;
+  let revenueByTheater = store.charts?.RevenueByTheater?.revenueByTheater
+  console.log(">> revenueByTheater", revenueByTheater)
   return (
     <div className="row" style={{ paddingLeft: "20px" }}>
-
-      <Card label="Số tài khoản khách" number={sumOfAccounts} icon="fa fa-users fa-lg" />
-      <Card label="Số phim đang chiếu" number={sumOfShowingMovies} icon="fa fa-film fa-lg" />
-      <Card label="Số phim sắp chiếu" number={sumOfComingMovies} icon="fa fa-file-video fa-lg" />
-      <Card label={`Doanh thu năm ${new Date().getFullYear()}`} number={statisticalByYear.toLocaleString(
-        "it-IT",
-        {
-          style: "currency",
-          currency: "VND",
-        })} icon="fa fa-money-bill fa-lg" />
-
+      {
+        revenueByTheater?.map((item, index) =>
+        (
+          <Card label={item.theaterName} number={item.total.toLocaleString(
+            "it-IT",
+            {
+              style: "currency",
+              currency: "VND",
+            })} icon="fa fa-money-bill-wave fa-lg" />
+        )
+        )
+      }
     </div >
   );
 };
-export default BoxChart;
+export default RevenueBoxChart;

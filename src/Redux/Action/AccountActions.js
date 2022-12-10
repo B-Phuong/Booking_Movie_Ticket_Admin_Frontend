@@ -58,8 +58,9 @@ export const signInAction = ({ info, navigate }) => {
 
 export const logOut = ({ store }) => {
     localStorage.clear();
-    store.account.AccountDispatch({
-        type: "ACCOUNT",
+    console.log(">> store.accounts", store.accounts.userAccount)
+    store.accounts.AccountDispatch({
+        type: "SIGN_IN",
         payload: localStorage.getItem("taiKhoan"),
     });
 }

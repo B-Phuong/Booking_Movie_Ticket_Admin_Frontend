@@ -6,7 +6,7 @@ import AdminUsers from "../AdminUsers";
 import "../../App.css";
 import "./HeaderAdmin.css";
 import "../Movies/Menu.css";
-import ChartArea from "../ChartsArea/ChartsArea";
+import ChartArea from "../ChartsArea/RevenueChartsArea";
 
 const getDefaultTabKey = ({ path = "Admin" }) => {
   const paths = path.split("/");

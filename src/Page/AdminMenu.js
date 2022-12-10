@@ -43,7 +43,8 @@ export default function AdminMenu() {
               <a href="#"><i className="fas fa-chart-bar fa-lg"></i> Thống kê <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="new">
-              <li> <NavLink end to="Charts/"> Tổng quát</NavLink> </li>
+              <li> <NavLink end to="Charts/"> Thống kê số lượng</NavLink> </li>
+              <li> <NavLink end to="Charts/Revenue"> Doanh thu</NavLink> </li>
             </ul>
           </ul>
         </div>

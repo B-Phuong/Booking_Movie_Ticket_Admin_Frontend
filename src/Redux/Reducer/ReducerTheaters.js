@@ -5,6 +5,8 @@ function GetTheaters(state, { type, payload }) {
       return { ...state, lsTheater: payload };
     case "LISTMOVIESINTHEATER":
       return { moviesInTheater: payload };
+    case "REVENUE_BY_THEATER":
+      return { revenueByTheater: payload };
     default:
       return state;
   }

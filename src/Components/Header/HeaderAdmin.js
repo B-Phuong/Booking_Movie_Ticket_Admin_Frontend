@@ -16,14 +16,10 @@ const HeaderAdmin = () => {
     <>
       <header id="navbar" style={{ top: "0px" }}>
         <nav class="close">
-
+          {console.log(">> TEST HEADER")}
           <i class="bx bx-user-circle"></i>
           <NavLink end to="/Admin/Info" ><span>{userName}</span></NavLink>
-
-          <a href="/#">
-            <i class="bx bx-home-smile" onClick={() => logOut({ store })}></i>
-            <span>Đăng xuất</span>
-          </a>
+          <NavLink><span onClick={() => logOut({ store })}>Đăng xuất</span></NavLink>
 
         </nav>
         <i class="bx bx-menu"></i>

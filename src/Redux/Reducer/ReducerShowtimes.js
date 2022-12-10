@@ -5,6 +5,8 @@ function GetShowtimes(state, { type, payload }) {
       return { ...state, showtimes: payload };
     case "GETROOMS":
       return { ...state, rooms: payload };
+    case "GET_TIMELINE":
+      return { ...state, timeline: payload };
     default:
       return state;
   }
