@@ -28,7 +28,7 @@ export const getDetailAdminAction = ({ store }) => {
     })
         .then((res) => res.json())
         .then((dt) => {
-            console.log(">> data user admin", dt.data[0])
+            // console.log(">> data user admin", dt.data[0])
             store.accounts.AdminDetailDispatch({
                 type: "GET_DETAIL_ADMIN",
                 payload: dt.data[0],

@@ -53,7 +53,7 @@ function AddMovieForm(props) {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    console.log(">> before add", detailMovie)
+    // console.log(">> before add", detailMovie)
     // AddMovieAction(e);
   };
   // console.log(">> Invalid in add movie", isInvalid);

@@ -17,7 +17,7 @@ export const signInAction = ({ info, navigate }) => {
             title: "Xin chờ giây lát",
             buttons: false,
         });
-        console.log(">> res.json()", res.json());
+        // console.log(">> res.json()", res.json());
         const token = JSON.parse(localStorage.getItem("token"));
         if (res.status === 200) {
             swal({
@@ -58,7 +58,7 @@ export const signInAction = ({ info, navigate }) => {
 
 export const logOut = ({ store }) => {
     localStorage.clear();
-    console.log(">> store.accounts", store.accounts.userAccount)
+    // console.log(">> store.accounts", store.accounts.userAccount)
     store.accounts.AccountDispatch({
         type: "SIGN_IN",
         payload: localStorage.getItem("taiKhoan"),

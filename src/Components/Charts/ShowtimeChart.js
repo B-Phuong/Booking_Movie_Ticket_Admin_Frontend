@@ -59,7 +59,7 @@ const ShowtimeChart = () => {
   var count = dateShowtime.map((item) => {
     return item["quantity"];
   });
-  console.log(">> formatDate", formatDate);
+  // console.log(">> formatDate", formatDate);
   // console.log(">> count", count);
   var options = {
     series: [

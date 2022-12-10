@@ -116,7 +116,7 @@ export const getAllFDsAction = async ({ store }) => {
 
 export const deleteFDAction = async ({ store, props, navigate }) => {
     const token = JSON.parse(localStorage.getItem("token"));
-    console.log(">> props", props.biDanh)
+    // console.log(">> props", props.biDanh)
     let res = await fetch(API_FOODDRINKS.DELETE + props.biDanh, {
         headers: {
             Authorization: `Bearer ${token}`,

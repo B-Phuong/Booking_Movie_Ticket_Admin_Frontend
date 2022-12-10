@@ -13,7 +13,7 @@ export const BarChart = () => {
         setLoading(false)
     }, [])
 
-    console.log(">> BARCHART top10", store.charts.Top10Users?.top10Users)
+    // console.log(">> BARCHART top10", store.charts.Top10Users?.top10Users)
     let dataFilter = store.charts.Top10Users?.top10Users
     let userName = dataFilter?.map((item) => {
         return item["user"];

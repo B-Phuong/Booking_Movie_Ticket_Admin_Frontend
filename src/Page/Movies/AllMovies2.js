@@ -36,7 +36,7 @@ export default function AllMovies2() {
     ? store.lsComingMovie.ComingMovie?.listMovie
     : store.lsShowingMovie.ShowingMovie?.listMovie;
   const data = movies
-  console.log(">> data", data)
+  // console.log(">> data", data)
   const formattedDate = (dateInput) => {
     let today = new Date(dateInput);
     const yyyy = today.getFullYear();
@@ -61,7 +61,7 @@ export default function AllMovies2() {
   const dataExport = data?.map((item) => {
     return { ...item, ngayKhoiChieu: formattedDate(item.ngayKhoiChieu) }
   })
-  console.log(">> isComing", isComing)
+  // console.log(">> isComing", isComing)
   const columns = [
     {
       name: 'Tên phim',

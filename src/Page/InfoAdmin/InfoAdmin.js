@@ -19,12 +19,12 @@ function InfoAdmin(props) {
     setLoading(true);
     getDetailAdminAction({ store })
     let admin = store.accounts.AdminDetail?.adminDetail
-    console.log(">> detail admin:", admin);
+    // console.log(">> detail admin:", admin);
 
     setLoading(false)
   }, []);
 
-  console.log(">> detail user:", admin);
+  // console.log(">> detail user:", admin);
   if (!loading)
     return (
       <div

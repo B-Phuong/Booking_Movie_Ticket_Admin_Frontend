@@ -17,8 +17,8 @@ export const getStaticAction = async ({ store }) => {
     let getYear = (date) => {
         return new Date(date).getFullYear()
     }
-    console.log(">> response by year", new Date(response.data[0].thoiGianDat).getFullYear())//.getYear())
-    console.log(">> this ysear", new Date().getFullYear())
+    // console.log(">> response by year", new Date(response.data[0].thoiGianDat).getFullYear())//.getYear())
+    // console.log(">> this ysear", new Date().getFullYear())
     let sum = function (items, prop) {
         return items.reduce(function (a, b) {
             return a + b[prop];
@@ -26,9 +26,9 @@ export const getStaticAction = async ({ store }) => {
     };
 
     let filterByYear = response.data.filter((item) => getYear(item.thoiGianDat) === Number("2022"))
-    console.log(">> filterByYear", filterByYear)
+    // console.log(">> filterByYear", filterByYear)
     let total = sum(filterByYear, 'tienThanhToan')
-    console.log(">> total", total)
+    // console.log(">> total", total)
     store.ticketBooking.GetStatisticalDispatch({
         type: "GET_BY_YEAR",
         payload: total
@@ -66,13 +66,13 @@ export const getShowtimeTicketSold = async ({ store }) => {
         type: "GETTICKETBOOKINGS",
         payload: data.data,
     });
-    console.log(">> CALL GET", data)
+    // console.log(">> CALL GET", data)
 }
 
 export const getTop10User = async ({ store }) => {
     getShowtimeTicketSold({ store })
     let data = store.ticketBooking?.GetAllTicketBooking?.lsTicketBookings
-    console.log(">> dataa", data)
+    // console.log(">> dataa", data)
     let dateFilter = [];
     if (data != undefined)
         data?.forEach((item) => {
@@ -92,7 +92,7 @@ export const getTop10User = async ({ store }) => {
         type: "GET_TOP_10",
         payload: dateFilter,
     });
-    console.log(">> dateFilter user", dateFilter);
+    // console.log(">> dateFilter user", dateFilter);
 }
 
 export const getRevenueByTheater = async ({ store }) => {
@@ -119,7 +119,7 @@ export const getTimelineOfShowtime = async ({ store }) => {
         method: "GET",
     })
     let data = await res.json()
-    console.log(">> GET timeline", data)
+    // console.log(">> GET timeline", data)
     store.charts.TimelineOfShowtimeDispatch({
         type: "GET_TIMELINE",
         payload: data.data,

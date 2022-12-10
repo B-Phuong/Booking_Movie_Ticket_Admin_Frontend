@@ -44,7 +44,7 @@ const RevenueBoxChart = () => {
       </div>)
   }
   let revenueByTheater = store.charts?.RevenueByTheater?.revenueByTheater
-  console.log(">> revenueByTheater", revenueByTheater)
+  // console.log(">> revenueByTheater", revenueByTheater)
   return (
     <div className="row" style={{ paddingLeft: "20px" }}>
       {
