@@ -7,7 +7,7 @@ import AdminFoodDrinks from './AdminFoodsDrinks'
 import AdminMovies from './AdminMovies'
 import AdminUsers from './AdminUsers'
 import InfoAdmin from './InfoAdmin/InfoAdmin'
-
+import { IconName, RiMovie2Line } from "react-icons/ri";
 export default function AdminMenu() {
   return (
     <>
@@ -19,9 +19,9 @@ export default function AdminMenu() {
           <ul id="menu-content" className="menu-content collapse out">
 
             <i className="fa fa-dashboard fa-lg"></i>Các chức năng
-            <li> <NavLink end to="Info" > <i className="fa fa-user fa-lg"></i> Thông tin cá nhân</NavLink></li>
+            {/* <li> <NavLink end to="Info" > <i className="fa fa-user fa-lg"></i> Thông tin cá nhân</NavLink></li> */}
             <li data-toggle="collapse" data-target="#products" className="collapsed">
-              <a href="#"><i className="fa fa-gift fa-lg"></i> Quản lý phim <span className="arrow"></span></a>
+              <a href="#"><i className="fa fa-film fa-lg"></i> Quản lý phim <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="products">
               <li> <NavLink end to="Movies" >Danh sách phim</NavLink></li>
@@ -29,7 +29,7 @@ export default function AdminMenu() {
             </ul>
 
             <li data-toggle="collapse" data-target="#service" className="collapsed">
-              <a href="#"><i className="fa fa-globe fa-lg"></i> Quản lý combo <span className="arrow"></span></a>
+              <a href="#"><i className="fa fa-pizza-slice fa-lg"></i> Quản lý combo <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="service">
               <li> <NavLink end to="Foods" >Danh sách combo</NavLink></li>
@@ -43,7 +43,8 @@ export default function AdminMenu() {
               <a href="#"><i className="fas fa-chart-bar fa-lg"></i> Thống kê <span className="arrow"></span></a>
             </li>
             <ul className="sub-menu collapse" id="new">
-              <li> <NavLink end to="Charts/"> Tổng quát</NavLink> </li>
+              <li> <NavLink end to="Charts/"> Thống kê số lượng</NavLink> </li>
+              <li> <NavLink end to="Charts/Revenue"> Doanh thu</NavLink> </li>
             </ul>
           </ul>
         </div>

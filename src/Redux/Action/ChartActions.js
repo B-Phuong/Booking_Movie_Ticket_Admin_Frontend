@@ -94,3 +94,34 @@ export const getTop10User = async ({ store }) => {
     });
     console.log(">> dateFilter user", dateFilter);
 }
+
+export const getRevenueByTheater = async ({ store }) => {
+    let res = await fetch(API_CHARTS.GET_REVENUE_BY_THEATER, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        method: "GET",
+    })
+    let data = await res.json()
+    store.charts.RevenueByTheaterDispatch({
+        type: "REVENUE_BY_THEATER",
+        payload: data.data,
+    });
+}
+
+export const getTimelineOfShowtime = async ({ store }) => {
+    let res = await fetch(API_CHARTS.GET_TIMELINE_SHOWTIME, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        method: "GET",
+    })
+    let data = await res.json()
+    console.log(">> GET timeline", data)
+    store.charts.TimelineOfShowtimeDispatch({
+        type: "GET_TIMELINE",
+        payload: data.data,
+    });
+}

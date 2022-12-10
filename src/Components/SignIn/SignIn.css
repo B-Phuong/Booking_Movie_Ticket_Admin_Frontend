@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:600|Work+Sans:400,500,600,700&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Open+Sans:600|Work+Sans:400,500,600,700&display=swap'); */
 
 body {
   background: rgb(48, 176, 180);
   /* background: #005f5f; */
-  /* background: linear-gradient(135deg, #005f5f 6%, rgb(48, 176, 180) 20%);  */
-  font-family: monospace;
+  background: linear-gradient(135deg, #005f5f 0%, rgb(48, 176, 180) 20%);
+  font-family: monospace !important;
 }
 
 html {
@@ -24,8 +24,8 @@ html {
 
 #headerTitle {
   text-align: center;
-  font-family: 'open sans', sans-serif;
-  padding: 2rem 0;
+  font-family: monospace !important;
+  padding: 1.6rem 0;
   margin: 0;
   font-size: 2rem;
 }
@@ -68,5 +68,6 @@ html {
   align-self: start;
   padding-left: 4.5rem;
   padding-bottom: 0.5rem;
+  font-size: 16px;
   color: rgba(187, 187, 187, 0.9);
 }

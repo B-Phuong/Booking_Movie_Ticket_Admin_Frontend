@@ -6,33 +6,32 @@ import { BarChart } from "../../Components/Charts/BarChart";
 import RevenueBoxChart from "../../Components/Charts/RevenueBoxChart";
 import TimeLineChart from "../../Components/Charts/TimeLineChart";
 
-export default function ChartsArea() {
+export default function RevenueChartsArea() {
   return (
     <div class="chart-area">
-      <BoxChart />
+      <RevenueBoxChart />
+      {/* <div className="row">
+        <div className="col-md-6 col-xl-6"> */}
       <div
         style={{
           color: "white",
           paddingLeft: "20px"
         }}
       >
-        Lượt bán theo ngày chiếu
+        Doanh thu theo quý
       </div>
-      <ShowtimeChart />
+      <QuarterlyRevenueChart />
       {/* </div>
         <div className="col-md-4 col-xl-4"> */}
       <div
         style={{
           color: "white",
-          paddingLeft: "20px",
+          paddingLeft: "20px"
         }}
       >
-        Tỉ lệ mua vé giữa các khung giờ
+        10 khách hàng tiềm năng
       </div>
-      <TimeLineChart />
-
-      {/* </div> */}
-      {/* </div> */}
+      <BarChart />
     </div>
   );
 }

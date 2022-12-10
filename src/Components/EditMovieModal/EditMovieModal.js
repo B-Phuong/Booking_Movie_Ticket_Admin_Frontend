@@ -10,7 +10,9 @@ import { Col, Form, Row } from "react-bootstrap";
 import { Multiselect } from "multiselect-react-dropdown";
 import { useNavigate } from "react-router-dom";
 import { List } from "react-content-loader";
-
+import { deleteMovieAction, editMovieAction } from "../../Redux/Action/MovieActions";
+import { GiTheaterCurtains, IconName } from "react-icons/gi";
+import { FaTheaterMasks } from "react-icons/fa";
 function EditMovieModal(props) {
   const [isShow, setInvokeModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -102,45 +104,7 @@ function EditMovieModal(props) {
       title: "Xin chờ giây lát",
       buttons: false,
     });
-    const token = JSON.parse(localStorage.getItem("token"));
-    let res = await fetch(API_MOVIE.UPDATE + biDanh, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: "PUT",
-      body: fd,
-    });
-    if (res.status === 401) {
-      swal({
-        title: "Vui lòng đăng nhập lại",
-        text: "Phiên đăng nhập đã hết hạn",
-        icon: "warning",
-        buttons: true,
-      });
-      setTimeout(function () {
-        localStorage.clear();
-        navigate("/signIn");
-      }, 1000);
-    }
-    if (res.status === 200) {
-      swal({
-        title: "Cập nhật thành công!",
-        text: "",
-        icon: "success",
-        buttons: true,
-      });
-      setIsEdit(false);
-      setTimeout(function () {
-        navigate(0);
-      }, 1000);
-    } else
-      swal({
-        title: "Cập nhật thất bại",
-        text: "Hãy thử lại",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      });
+    editMovieAction({ store, fd, navigate, biDanh, setIsEdit })
   };
   const handleEdit = async (e, movie) => {
     UpdateMovieAction(e);
@@ -173,7 +137,7 @@ function EditMovieModal(props) {
       setDislayBanner(url);
     }
   };
-  const token = JSON.parse(localStorage.getItem("token"));
+
   const DeleteMovieAction = (id) => {
     swal({
       icon: "info",
@@ -181,33 +145,8 @@ function EditMovieModal(props) {
       buttons: false,
       closeOnClickOutside: false,
     });
-    fetch(API_SHOWTIMES.DELETE + props.biDanh, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-    })
-      .then((res) => {
-        if (res.status == 200) {
-          swal({
-            title: "Xóa phim thành công",
-            text: "",
-            icon: "success",
-          });
-          setTimeout(function () {
-            navigate(0);
-          }, 1000);
-        } else return res.json();
-      })
-      .then((response) => {
-        if (response != true)
-          return swal({
-            title: "Xóa phim thất bại",
-            text: response.error,
-            icon: "error",
-          });
-      });
+    //
+    deleteMovieAction({ props, navigate })
   };
   const handleDelete = () => {
     swal("Bạn chắc chắn muốn xóa phim này?", {
@@ -226,9 +165,10 @@ function EditMovieModal(props) {
     <div style={{ display: "flex" }}>
       <Button
         color="black"
-        name="Chi tiết"
+        name={<i className="fa fa-info fa-lg"></i>}
         background="pink"
         width="fit-content"
+        padding="4px 8px"
         borderRadius="10.2em"
         fontWeight="bold"
         onClick={() => handleClick(props.biDanh)}
@@ -236,22 +176,30 @@ function EditMovieModal(props) {
       <NavLink end to={`/Admin/Movies/${props.biDanh}/showtimes`}>
         <Button
           margin="0px 4px"
-          color="red"
-          name="Lịch chiếu"
+          color="black"
+          name={<FaTheaterMasks size={"20px"} />}
           background="pink"
           width="fit-content"
+          padding="4px 8px"
           borderRadius="10.2em"
           fontWeight="bold"
         />
       </NavLink>
       {
         props.coming ?
-          <button style={{
-            border: "none", background: "transparent"
-          }} onClick={handleDelete}><i className="fa fa-trash"></i></button>
+          <Button
+            margin="0px 4px"
+            color="black"
+            name={<i className="fa fa-trash"></i>}
+            background="pink"
+            width="fit-content"
+            padding="4px 8px"
+            borderRadius="10.2em"
+            fontWeight="bold"
+            onClick={handleDelete}
+          />
           : ""
       }
-
       <Form
         id="edit-form"
         style={{ maxWidth: "800px" }}
@@ -423,6 +371,21 @@ function EditMovieModal(props) {
                         />
                       </FloatingLabel>
                     </Form.Group>
+                    <Form.Group as={Col} md="3" controlId="validationCustom04">
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Đánh giá"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          type="number"
+                          min={0}
+                          value={data.detailMovie?.danhGia}
+
+                          readOnly
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
                     <div className="row">
                       <div className="col-md-5">
                         Thể loại
@@ -490,7 +453,7 @@ function EditMovieModal(props) {
                         name="banner"
                         md="6"
                       />
-                      <Card style={{ alignItems: "center" }}>
+                      <Card style={{ alignItems: "center", background: "transparent" }}>
                         <Card.Img
                           style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                           variant="top"
@@ -511,7 +474,7 @@ function EditMovieModal(props) {
                           uploadImage(event);
                         }}
                       />
-                      <Card style={{ alignItems: "center" }}>
+                      <Card style={{ alignItems: "center", background: "transparent" }}>
                         <Card.Img
                           style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                           variant="top"

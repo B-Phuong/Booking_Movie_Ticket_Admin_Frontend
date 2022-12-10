@@ -68,11 +68,6 @@ const ShowtimeChart = () => {
         type: "area",
         data: count.length == 1 ? [0, ...count] : count,
       },
-      //   {
-      //     name: "TEAM B",
-      //     type: "line",
-      //     data: [55, 69, 45, 61, 43, 54, 37, 52, 44, 61, 43],
-      //   },
     ],
     chart: {
       height: 400,
@@ -99,7 +94,7 @@ const ShowtimeChart = () => {
     yaxis: [
       {
         title: {
-          text: "Số lượng",
+          // text: "Số lượng",
           fill: "blue",
         },
         fill: "blue",

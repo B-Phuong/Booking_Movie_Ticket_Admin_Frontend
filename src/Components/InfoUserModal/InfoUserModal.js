@@ -28,7 +28,6 @@ function InfoUserModal(props) {
     setTenTaiKhoan(tenTaiKhoan);
     setInvokeModal(true);
   };
-  var data;
   useEffect(() => {
     setLoading(true);
     if (!tenTaiKhoan) return;
@@ -36,7 +35,7 @@ function InfoUserModal(props) {
     //   .then((res) => res.json())
     //   .then((dt) => {
     store.users.UsersDispatch({
-      type: "GETD_DETAIL",
+      type: "GET_DETAIL",
       payload: tenTaiKhoan,
     });
     let user = store.users?.listUsers?.detail;
@@ -47,6 +46,7 @@ function InfoUserModal(props) {
       anhDaiDien: user?.anhDaiDien,
       email: user?.email,
       hoTen: user?.hoTen,
+      ngayTao: user?.createdAt
     });
     setLoading(false);
     //  });
@@ -58,14 +58,26 @@ function InfoUserModal(props) {
     setDetailUser(emptyUser);
     setDisplayImage();
   };
+  const formattedDate = (dateInput) => {
+    let today = new Date(dateInput);
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+
+    if (dd < 10) dd = "0" + dd;
+    if (mm < 10) mm = "0" + mm;
+
+    return dd + "-" + mm + "-" + yyyy;
+  };
+
   return (
     <div style={{ display: "flex" }}>
       <Button
-        height="48px"
         color="black"
-        name="Chi tiết"
+        name={<i className="fa fa-info fa-lg"></i>}
         background="pink"
         width="fit-content"
+        padding="4px 8px"
         borderRadius="10.2em"
         fontWeight="bold"
         onClick={() => handleClick(props.tenTaiKhoan)}
@@ -108,7 +120,7 @@ function InfoUserModal(props) {
                           type="text"
                           name="hoTen"
                           min={0}
-                          value={detailUser?.hoTen}
+                          value={detailUser?.hoTen == undefined ? "Để trống" : detailUser?.hoTen}
                           plaintext
                           readOnly
                         />
@@ -147,6 +159,20 @@ function InfoUserModal(props) {
                     </Form.Group>
                   </Row>
                   <Row className="mb-3">
+                    <Form.Group as={Col} md="6" controlId="validationCustom04">
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Ngày tạo tài khoản"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          type={"text"}
+                          name="createdAt"
+                          value={formattedDate(new Date(detailUser.ngayTao))}
+                          plaintext
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
                     <Form.Group
                       style={{ width: "18rem" }}
                       controlId="validationCustom05"

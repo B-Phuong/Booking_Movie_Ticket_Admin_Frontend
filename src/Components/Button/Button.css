@@ -37,7 +37,7 @@ textarea:disabled {
     color: #fff;
     cursor: pointer;
     display: inline-flex;
-    font-family: "JetBrains Mono", monospace;
+    font-family: monospace;
     height: 48px;
     justify-content: center;
     line-height: 1;
@@ -68,7 +68,7 @@ textarea:disabled {
     color: #fff;
     cursor: pointer;
     display: inline-flex;
-    font-family: "JetBrains Mono", monospace;
+    font-family: monospace;
     height: 48px;
     justify-content: center;
     line-height: 1;
@@ -100,4 +100,20 @@ textarea:disabled {
 .button-custom:active {
     box-shadow: #3c4fe0 0 3px 7px inset;
     transform: translateY(2px);
+}
+
+@media only screen and (min-width: 1200px) {}
+
+@media only screen and (min-width: 1700px) {
+    .button-custom.yes {
+        width: fit-content;
+        padding: 30px 60px 30px 60px;
+        font-size: 20px;
+    }
+
+    .button-custom.no {
+        width: fit-content;
+        padding: 30px 60px 30px 60px;
+        font-size: 20px;
+    }
 }

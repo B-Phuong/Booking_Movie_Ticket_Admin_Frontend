@@ -1,4 +1,4 @@
-.nav ul {
+/* .nav ul {
   list-style: none;
   background-color: #444;
   text-align: center;
@@ -9,7 +9,7 @@
 }
 
 .nav li {
-  font-family: "Oswald", sans-serif;
+  font-family: monospace;
   font-size: 1.2em;
   line-height: 40px;
   height: 40px;
@@ -46,25 +46,11 @@
     font-weight: lighter;
   }
 
-  /* Option 1 - Display Inline */
+ 
   .nav li {
     display: inline-block;
     margin-right: -4px;
   }
-
-  /* Options 2 - Float
-    .nav li {
-      float: left;
-    }
-    .nav ul {
-      overflow: auto;
-      width: 600px;
-      margin: 0 auto;
-    }
-    .nav {
-      background-color: #444;
-    }
-    */
 }
 
 .admin-page {
@@ -93,4 +79,4 @@
 .nav-fill .nav-item .nav-link {
   font-family: monospace;
   font-size: xx-large;
-}
+} */

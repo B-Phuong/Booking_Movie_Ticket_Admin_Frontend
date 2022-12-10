@@ -5,27 +5,23 @@ import { StoreContext } from "../../Redux/Store/Store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_USER } from "../../common/ApiController";
-import { getStaticAction } from "../../Redux/Action/ChartActions";
+import { getRevenueByTheater, getStaticAction } from "../../Redux/Action/ChartActions";
 import './Chart.css';
-import { getAllUserAction } from "../../Redux/Action/UserActions";
 import { getComingMoviesAction, getShowingMoviesAction } from "../../Redux/Action/MovieActions";
-const BoxChart = () => {
+const RevenueBoxChart = () => {
   const store = useContext(StoreContext);
   let token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
   useEffect(() => {
     //GetStaticAction()
-    getAllUserAction({ store })
-    getShowingMoviesAction({ store })
-    getComingMoviesAction({ store })
-    getStaticAction({ store })
+    getRevenueByTheater({ store })
   }, []);
 
-  const Card = ({ label, number, icon, link }) => {
+  const Card = ({ label, number, icon }) => {
     return (
       <div className="col-xl-3 col-lg-6">
-        <div className="stati card card-stats mb-4 mb-xl-0" style={{ background: "transparent", borderRadius: "1rem", cursor: "pointer" }}>
-          <div className="card-body" style={{ borderStyle: "dashed", borderRadius: "1rem", height: "118px" }} onClick={() => navigate(link)}>
+        <div className="stati card card-stats mb-4 mb-xl-0" style={{ background: "transparent", borderRadius: "1rem" }}>
+          <div className="card-body" style={{ borderStyle: "dashed", borderRadius: "1rem", height: "118px" }}>
             <div className="row">
               <div className="col">
                 <h6 className="card-title text-uppercase text-muted mb-0" style={{ color: "#242f40" }}>
@@ -47,24 +43,23 @@ const BoxChart = () => {
         </div>
       </div>)
   }
-  let statisticalByYear = store.ticketBooking.GetStatisticalByYear?.total
-  let sumOfAccounts = store.users.listUsers?.users?.length;
-  let sumOfShowingMovies = store.lsShowingMovie.ShowingMovie?.listMovie?.length;
-  let sumOfComingMovies = store.lsComingMovie.ComingMovie?.listMovie?.length;
+  let revenueByTheater = store.charts?.RevenueByTheater?.revenueByTheater
+  console.log(">> revenueByTheater", revenueByTheater)
   return (
     <div className="row" style={{ paddingLeft: "20px" }}>
-
-      <Card label="Số tài khoản khách" number={sumOfAccounts} icon="fa fa-users fa-lg" link="/Admin/Users" />
-      <Card label="Số phim đang chiếu" number={sumOfShowingMovies} icon="fa fa-film fa-lg" link="/Admin/Movies" />
-      <Card label="Số phim sắp chiếu" number={sumOfComingMovies} icon="fa fa-file-video fa-lg" link="/Admin/Movies" />
-      <Card label={`Doanh thu năm ${new Date().getFullYear()}`} number={statisticalByYear?.toLocaleString(
-        "it-IT",
-        {
-          style: "currency",
-          currency: "VND",
-        })} icon="fa fa-money-bill fa-lg" />
-
+      {
+        revenueByTheater?.map((item, index) =>
+        (
+          <Card label={item.theaterName} number={item.total.toLocaleString(
+            "it-IT",
+            {
+              style: "currency",
+              currency: "VND",
+            })} icon="fa fa-money-bill-wave fa-lg" />
+        )
+        )
+      }
     </div >
   );
 };
-export default BoxChart;
+export default RevenueBoxChart;

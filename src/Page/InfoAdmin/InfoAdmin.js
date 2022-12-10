@@ -14,28 +14,17 @@ function InfoAdmin(props) {
   const [fileImage, setFileImage] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  let emptyUser = {
-    tenTaiKhoan: "",
-    email: "",
-    hoTen: "",
-  };
-  const [detailUser, setDetailUser] = useState(emptyUser);
-  let data = store.accounts.AdminDetail?.adminDetail
+  let admin = store.accounts.AdminDetail?.adminDetail
   useEffect(() => {
     setLoading(true);
-
     getDetailAdminAction({ store })
     let admin = store.accounts.AdminDetail?.adminDetail
-    // console.log(">> detail user:", store.users?.listUsers);
-    setDetailUser({
-      tenTaiKhoan: admin?.tentaiKhoan,
-      email: admin?.email,
-      hoTen: admin?.hoTen,
-    });
+    console.log(">> detail admin:", admin);
+
     setLoading(false)
   }, []);
 
-  console.log(">> detail user:", detailUser);
+  console.log(">> detail user:", admin);
   if (!loading)
     return (
       <div
@@ -56,14 +45,13 @@ function InfoAdmin(props) {
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <FloatingLabel
                   controlId="floatingInput"
-                  label="Tên phim"
+                  label="Tên tài khoản"
                   className="mb-3"
                 >
                   <Form.Control
-                    required
                     type="text"
-                    name="tenPhim"
-                    value={detailUser?.tenTaiKhoan}
+                    name="tenTaiKhoan"
+                    value={admin?.tentaiKhoan}
                     readOnly
                   />
 
@@ -72,19 +60,24 @@ function InfoAdmin(props) {
               <Form.Group as={Col} md="4" controlId="validationCustom02">
                 <FloatingLabel
                   controlId="floatingInput"
-                  label="Ngày khởi chiếu"
+                  label="Email"
                   className="mb-3"
                 >
                   <Form.Control
-                    required
-                    type="date"
-                    name="ngayKhoiChieu"
+                    value={admin?.email}
+                    readOnly
+                    type="text"
+                    name="email"
                   // isInvalid={isInvalid}             
                   />
 
                 </FloatingLabel>
               </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationCustom04">
+
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} md="4" controlId="validationCustom04">
                 <FloatingLabel
                   controlId="floatingInput"
                   label="Họ tên"
@@ -93,8 +86,23 @@ function InfoAdmin(props) {
                   <Form.Control
                     type="text"
                     name="hoTen"
-                    min={"1"}
-                    value={detailUser?.hoTen}
+                    value={admin?.hoTen}
+                    readOnly
+                  />
+
+                </FloatingLabel>
+              </Form.Group>
+              <Form.Group as={Col} md="4" controlId="validationCustom04">
+                <FloatingLabel
+                  controlId="floatingInput"
+                  label="Số điện thoại"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    type="text"
+                    name="hoTen"
+                    value={admin?.SDT}
+                    readOnly
                   />
 
                 </FloatingLabel>

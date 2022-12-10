@@ -8,7 +8,7 @@ export const Button = ({
   name = "Hello",
   borderRadius = "none",
   width = "100%",
-  margin = "0px",
+  margin = "0px 2px 0px 2px",
   onClick,
   disabled,
   textAlign,

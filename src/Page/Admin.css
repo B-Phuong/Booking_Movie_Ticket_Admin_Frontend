@@ -36,7 +36,7 @@
 
 .nav-side-menu ul :not(collapsed) .arrow:before,
 .nav-side-menu li :not(collapsed) .arrow:before {
-    font-family: FontAwesome;
+    font-family: FontAwesome !important;
     content: "+";
     display: inline-block;
     padding-left: 10px;
@@ -79,7 +79,7 @@
 
 .nav-side-menu ul .sub-menu li:before,
 .nav-side-menu li .sub-menu li:before {
-    font-family: FontAwesome;
+    font-family: FontAwesome !important;
     content: "+";
     display: inline-block;
     padding-left: 10px;
@@ -153,5 +153,22 @@
 body {
     margin: 0px;
     padding: 0px;
-    overflow-x: hidden;
+    overflow-x: auto;
+}
+
+@media only screen and (min-width: 1200px) {}
+
+@media only screen and (min-width: 1700px) {
+    .nav-side-menu {
+        font-size: 20px;
+        width: 300px;
+    }
+
+    .nav-side-menu .brand {
+        font-size: 20px;
+    }
+
+    .form-floating {
+        font-size: 20px
+    }
 }

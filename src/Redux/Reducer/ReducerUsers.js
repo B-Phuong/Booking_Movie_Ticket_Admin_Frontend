@@ -3,9 +3,9 @@ function GetUser(state, { type, payload }) {
   switch (type) {
     case "GET_ALL":
       return { ...state, users: payload };
-    case "GETD_DETAIL":
+    case "GET_DETAIL":
       const found = state.users.find((item) => item.tentaiKhoan === payload);
-      // console.log(">> GETD_DETAIL", found);
+      // console.log(">> GET_DETAIL", found);
       if (found) return { ...state, detail: found };
       break;
     case "GET_TOP_10":
