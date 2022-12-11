@@ -63,12 +63,12 @@ function AddShowtimeModal(props) {
     e.preventDefault();
     let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
     // console.log(">> formatDateTime", formatDateTime);
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-      closeOnClickOutside: false,
-    });
+    // swal({
+    //   icon: "info",
+    //   title: "Xin chờ giây lát",
+    //   buttons: false,
+    //   closeOnClickOutside: false,
+    // });
     let body = {
       ngayChieu: formatDateTime,
       tenRap: detailShowtime.tenRap,

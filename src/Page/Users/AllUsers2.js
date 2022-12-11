@@ -190,7 +190,10 @@ export default function AllUsers2() {
   } else {
     return (
       // <div style={{ padding: "48px" }}>
-      <List style={{ padding: "48px", width: "925px" }} />
+      <List style={{ padding: "48px", width: "925px" }} speed={2}
+        backgroundColor={'#333'}
+        foregroundColor={'#999'}>
+      </List>
       //</div>
     );
   }

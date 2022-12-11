@@ -1,7 +1,15 @@
 import swal from "sweetalert";
 import { API_SHOWTIMES } from "../../common/ApiController";
-
+import swal2 from 'sweetalert2'
+const spinner = () => {
+    swal2.fire({
+        title: 'Xin chờ giây lát',
+        allowOutsideClick: false
+    })
+    swal2.showLoading()
+}
 export const addShowtimeAction = async ({ store, body, navigate, props }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     fetch(API_SHOWTIMES.ADD + props.slug + "/showtime", {
         headers: {
@@ -12,6 +20,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
         body: JSON.stringify(body),
     })
         .then((res) => {
+            swal2.close()
             if (res.status === 401) {
                 swal({
                     title: "Vui lòng đăng nhập lại",
@@ -46,6 +55,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
 }
 
 export const deleteShowtimeAction = async ({ store, body, navigate, slug }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     fetch(API_SHOWTIMES.DELETE + slug.slug + "/showtime", {
         headers: {
@@ -56,6 +66,7 @@ export const deleteShowtimeAction = async ({ store, body, navigate, slug }) => {
         body: JSON.stringify(body),
     })
         .then((res) => {
+            swal2.close()
             if (res.status == 200) {
                 swal({
                     title: "Xóa lịch chiếu thành công",

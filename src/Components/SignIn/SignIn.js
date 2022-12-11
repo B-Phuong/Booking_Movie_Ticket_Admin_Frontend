@@ -11,6 +11,7 @@ import { SIGN_IN } from '../../Redux/Constant/accountConst';
 import { API_ACCOUNTS } from '../../common/ApiController';
 import { useContext } from "react";
 import { StoreContext } from '../../Redux/Store/Store';
+import swal2 from 'sweetalert2'
 
 export default function SignIn() {
     const [userName, setUserName] = useState("")
@@ -23,11 +24,11 @@ export default function SignIn() {
             taiKhoan: userName,
             matKhau: password
         }
-        swal({
-            icon: "info",
-            title: "Xin chờ giây lát",
-            buttons: false,
-        });
+        swal2.fire({
+            title: 'Xin chờ giây lát',
+            allowOutsideClick: false
+        })
+        swal2.showLoading()
         let res = await fetch(API_ACCOUNTS.SIGNIN, {
             headers: {
                 "Content-Type": "application/json",
@@ -35,6 +36,7 @@ export default function SignIn() {
             method: "POST",
             body: JSON.stringify(info),
         })
+        swal2.close()
         let dataUser = await res.json();
         if (res.status === 200) {
             swal({
@@ -101,6 +103,7 @@ export default function SignIn() {
                                 onChange={(e) =>
                                     setPassword(e.target.value)
                                 } />
+                            <i class="uil uil-eye-slash toggle"></i>
                         </div>
                         <div>
                             <button style={{ margin: "20px 0px 20px 120px" }} className="button-custom yes" onClick={() => {

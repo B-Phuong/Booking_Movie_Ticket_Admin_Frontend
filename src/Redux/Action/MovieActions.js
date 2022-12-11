@@ -1,6 +1,15 @@
 import swal from "sweetalert";
 import { API_MOVIE } from "../../common/ApiController";
+import swal2 from 'sweetalert2'
+const spinner = () => {
+    swal2.fire({
+        title: 'Xin chờ giây lát',
+        allowOutsideClick: false
+    })
+    swal2.showLoading()
+}
 export const addMovieAction = async ({ store, fd, navigate }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     fetch(API_MOVIE.ADD, {
         headers: {
@@ -10,6 +19,7 @@ export const addMovieAction = async ({ store, fd, navigate }) => {
         body: fd,
     })
         .then((res) => {
+            swal2.close()
             if (res.status === 401) {
                 swal({
                     title: "Vui lòng đăng nhập lại",
@@ -34,6 +44,7 @@ export const addMovieAction = async ({ store, fd, navigate }) => {
             } else return res.json();
         })
         .then((response) => {
+            swal2.close()
             // console.log("response", response);
             if (response != true)
                 return swal({
@@ -45,6 +56,7 @@ export const addMovieAction = async ({ store, fd, navigate }) => {
 }
 
 export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_MOVIE.UPDATE + biDanh, {
         headers: {
@@ -53,6 +65,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
         method: "PUT",
         body: fd,
     });
+    swal2.close()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",
@@ -87,6 +100,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
 }
 
 export const deleteMovieAction = async ({ props, navigate }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     fetch(API_MOVIE.DELETE + props.biDanh, {
         headers: {
@@ -96,6 +110,7 @@ export const deleteMovieAction = async ({ props, navigate }) => {
         method: "DELETE",
     })
         .then((res) => {
+            swal2.close()
             if (res.status == 200) {
                 swal({
                     title: "Xóa phim thành công",

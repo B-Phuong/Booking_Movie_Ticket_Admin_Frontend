@@ -72,7 +72,10 @@ const TimeLineChart = () => {
           <ReactApexChart options={options.options} series={options.series} type="pie" />
         </div>
       ) : (
-        <List />
+        <List style={{ padding: "16" }} speed={2}
+          backgroundColor={'#333'}
+          foregroundColor={'#999'}>
+        </List>
       )}
     </>
   );

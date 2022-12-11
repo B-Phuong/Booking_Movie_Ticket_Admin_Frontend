@@ -9,7 +9,7 @@ import { Card, Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 import { Multiselect } from "multiselect-react-dropdown";
 import "../../Page/Movies/MovieManage.css";
 import { addMovieAction } from "../../Redux/Action/MovieActions";
-
+import swal2 from 'sweetalert2'
 function AddMovieForm(props) {
   const store = useContext(StoreContext);
   const [image, setDisplayImage] = useState();
@@ -43,18 +43,14 @@ function AddMovieForm(props) {
     for (let keyOfObj in detailMovie) {
       fd.append(keyOfObj, detailMovie[keyOfObj]);
     }
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-    });
     addMovieAction({ store, fd, navigate })
   };
 
   const handleAdd = (e) => {
     e.preventDefault();
+
     // console.log(">> before add", detailMovie)
-    // AddMovieAction(e);
+    AddMovieAction(e);
   };
   // console.log(">> Invalid in add movie", isInvalid);
   const formattedDate = (dateInput) => {
@@ -122,8 +118,8 @@ function AddMovieForm(props) {
     }
   };
   var today = new Date();
-  var nextMonth = new Date();
-  nextMonth.setMonth(today.getMonth() + 1);
+  var nextTwoWeeks = new Date();
+  nextTwoWeeks.setDate(today.getDate() + 14);
   return (
     <div
       style={{
@@ -174,7 +170,7 @@ function AddMovieForm(props) {
                   type="date"
                   name="ngayKhoiChieu"
                   // isInvalid={isInvalid}
-                  min={formattedDate(nextMonth)}
+                  min={formattedDate(nextTwoWeeks)}
                   onChange={(event) => {
                     checkValid(event);
                     detailMovie.ngayKhoiChieu = event.target.value;

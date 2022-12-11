@@ -21,13 +21,16 @@ export default function AllMovies2() {
   const store = useContext(StoreContext);
   const [biDanh, setBiDanh] = useState();
   const [isComing, setIsComing] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [filterText, setFilterText] = React.useState('');
   useEffect(() => {
     if (isComing) {
       //let data = store.lsShowingMovie.ShowingMovie.lsShowingMovie
       getComingMoviesAction({ store })
+      setLoading(true)
     } else {
       getShowingMoviesAction({ store })
+      setLoading(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isComing]);
@@ -245,7 +248,10 @@ export default function AllMovies2() {
   } else {
     return (
       // <div style={{ padding: "48px" }}>
-      <List style={{ padding: "48px", width: "925px" }} />
+      <List style={{ padding: "48px", width: "925px" }} speed={2}
+        backgroundColor={'#333'}
+        foregroundColor={'#999'}>
+      </List>
       //</div>
     );
   }

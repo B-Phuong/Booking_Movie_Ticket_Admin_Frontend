@@ -20,10 +20,10 @@ const CheckExpiredToken = () => {
             type: "SIGN_IN",
             payload: localStorage.getItem("taiKhoan"),
           });
-          navigate("/");
+          navigate("/AdminSignIn");
           break;
         default:
-          navigate("/");
+          navigate("/AdminSignIn");
           return;
       }
     });

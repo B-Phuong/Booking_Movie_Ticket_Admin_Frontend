@@ -1,11 +1,7 @@
 import React, { useContext, useState } from "react";
 import { StoreContext } from "../../Redux/Store/Store";
-import { API_FOODDRINKS } from "../../common/ApiController";
 import { Card } from "react-bootstrap";
 import { FloatingLabel } from "react-bootstrap";
-import { Button } from "../Button/Button";
-import swal from "sweetalert";
-import { NavLink } from "react-router-dom";
 import { Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty";
@@ -74,12 +70,6 @@ function AddFDForm(props) {
     for (let keyOfObj in detailFD) {
       fd.append(keyOfObj, detailFD[keyOfObj]);
     }
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-    });
-    // console.log(">> fd", fd);
     addFDAction({ store, fd, navigate })
   };
   const handleAdd = async (e, movie) => {
@@ -137,10 +127,12 @@ function AddFDForm(props) {
             <Form.Group className="col-5">
               <Form.Label>Mô tả</Form.Label>
               <Form.Control
+                className="is-invalid add-fd"
                 as="textarea"
                 name="moTa"
                 rows={4}
                 onChange={(event) => {
+                  checkValid(event);
                   detailFD.moTa = event.target.value;
                 }}
               />

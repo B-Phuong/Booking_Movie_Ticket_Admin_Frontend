@@ -99,11 +99,7 @@ function EditMovieModal(props) {
     for (let keyOfObj in detailMovie) {
       fd.append(keyOfObj, detailMovie[keyOfObj]);
     }
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-    });
+
     editMovieAction({ store, fd, navigate, biDanh, setIsEdit })
   };
   const handleEdit = async (e, movie) => {
@@ -139,13 +135,6 @@ function EditMovieModal(props) {
   };
 
   const DeleteMovieAction = (id) => {
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-      closeOnClickOutside: false,
-    });
-    //
     deleteMovieAction({ props, navigate })
   };
   const handleDelete = () => {
@@ -510,7 +499,10 @@ function EditMovieModal(props) {
               {/* <EditForm /> */}
             </Modal.Body>
           ) : (
-            <List style={{ padding: "16px" }} />
+            <List style={{ padding: "16" }} speed={2}
+              backgroundColor={'#333'}
+              foregroundColor={'#999'}>
+            </List>
           )}
 
           <Modal.Footer>

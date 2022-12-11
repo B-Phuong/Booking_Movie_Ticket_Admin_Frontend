@@ -124,7 +124,10 @@ const ShowtimeChart = () => {
       {!isLoading ? (
         <ReactApexChart options={options} series={options.series} type="line" height={400} />
       ) : (
-        <List />
+        <List style={{ padding: "16" }} speed={2}
+          backgroundColor={'#333'}
+          foregroundColor={'#999'}>
+        </List>
       )}
     </>
   );

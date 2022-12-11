@@ -78,12 +78,6 @@ export default function Showtimes() {
   };
 
   const DeleteShowtimeAction = (id) => {
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-      closeOnClickOutside: false,
-    });
     let body = {
       maLichChieu: id,
     }
@@ -261,7 +255,10 @@ export default function Showtimes() {
                   </tbody>
                 </Table>
               ) : (
-                <List style={{ padding: "16px" }} />
+                <List style={{ padding: "16px" }} speed={2}
+                  backgroundColor={'#333'}
+                  foregroundColor={'#999'}>
+                </List>
               )}
             </Col>
           </Row>

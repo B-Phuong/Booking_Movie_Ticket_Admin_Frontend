@@ -38,7 +38,7 @@ export const SearchBar = ({ filterText, onFilter, placeholder }) => {
                 >
                     <Form.Control
                         required
-                        search="text"
+                        type="search"
                         name="tenPhim"
                         value={filterText}
                         onChange={onFilter}

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { StoreContext } from "./Redux/Store/Store";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import { API_USER } from "./common/ApiController";
 import PrivateAdminRoutes from "./utils/PrivateAdminRoutes";
@@ -34,14 +34,15 @@ function App() {
       <BrowserRouter>
         {/* <HeaderAdmin /> */}
 
-        <Routes>
+        <Routes >
 
           {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/" element={<SignIn />} />
+          <Route path="/AdminSignIn" element={<SignIn />} />
           <Route element={<PrivateAdminRoutes />}>
 
-            <Route path="/Admin/*" element={<AdminMenu />} />
+            <Route index path="/Admin/*" element={<AdminMenu />} />
           </Route>
+          <Route path="*" element={<Navigate to="/Admin/Movies" replace />} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

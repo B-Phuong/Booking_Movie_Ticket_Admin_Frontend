@@ -96,12 +96,6 @@ function EditFDModal(props) {
     for (let keyOfObj in detailFD) {
       fd.append(keyOfObj, detailFD[keyOfObj]);
     }
-    swal({
-      icon: "info",
-      title: "Xin chờ giây lát",
-      buttons: false,
-      closeOnClickOutside: false,
-    });
     // console.log(">> fd", fd);
     editFDAction({ store, fd, biDanh, navigate, setShow })
   };
@@ -363,7 +357,10 @@ function EditFDModal(props) {
               {/* <EditForm /> */}
             </Modal.Body>
           ) : (
-            <List style={{ padding: "16px" }} />
+            <List style={{ padding: "16" }} speed={2}
+              backgroundColor={'#333'}
+              foregroundColor={'#999'}>
+            </List>
           )}
 
           <Modal.Footer>

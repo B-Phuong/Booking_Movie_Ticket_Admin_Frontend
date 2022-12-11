@@ -196,7 +196,10 @@ function InfoUserModal(props) {
               {/* <EditForm /> */}
             </Modal.Body>
           ) : (
-            <List style={{ padding: "16px" }} />
+            <List style={{ padding: "16" }} speed={2}
+              backgroundColor={'#333'}
+              foregroundColor={'#999'}>
+            </List>
           )}
 
           <Modal.Footer>

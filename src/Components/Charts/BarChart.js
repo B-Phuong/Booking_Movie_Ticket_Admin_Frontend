@@ -56,7 +56,10 @@ export const BarChart = () => {
             {!isLoading ? (
                 <ReactApexChart options={state.options} series={state.series} type="bar" height={140} />
             ) : (
-                <List />
+                <List speed={2}
+                    backgroundColor={'#333'}
+                    foregroundColor={'#999'}>
+                </List>
             )}
         </>
     )

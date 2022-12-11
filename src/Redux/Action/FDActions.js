@@ -1,7 +1,15 @@
 import { API_FOODDRINKS } from "../../common/ApiController";
 import swal from "sweetalert";
-
+import swal2 from 'sweetalert2'
+const spinner = () => {
+    swal2.fire({
+        title: 'Xin chờ giây lát',
+        allowOutsideClick: false
+    })
+    swal2.showLoading()
+}
 export const addFDAction = async ({ store, fd, navigate }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_FOODDRINKS.ADD, {
         headers: {
@@ -10,6 +18,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
         method: "POST",
         body: fd,
     });
+    swal2.close()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",
@@ -22,7 +31,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
             navigate("/signIn");
         }, 1000);
     }
-    if (res.status === 200) {
+    if (res.status === 201) {
         swal({
             title: "Thêm thành công!",
             text: "",
@@ -42,6 +51,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
 }
 
 export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_FOODDRINKS.UPDATE + biDanh, {
         headers: {
@@ -50,6 +60,7 @@ export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => 
         method: "PUT",
         body: fd,
     });
+    swal2.close()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",
@@ -115,6 +126,7 @@ export const getAllFDsAction = async ({ store }) => {
 }
 
 export const deleteFDAction = async ({ store, props, navigate }) => {
+    spinner()
     const token = JSON.parse(localStorage.getItem("token"));
     // console.log(">> props", props.biDanh)
     let res = await fetch(API_FOODDRINKS.DELETE + props.biDanh, {
@@ -124,6 +136,7 @@ export const deleteFDAction = async ({ store, props, navigate }) => {
         },
         method: "DELETE",
     });
+    swal2.close()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",

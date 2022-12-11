@@ -2,7 +2,6 @@ import { API_ACCOUNTS } from "../../common/ApiController";
 import swal from 'sweetalert'
 import Reducer from '../Reducer/ReducerAccounts'
 import { SIGN_IN } from "../Constant/accountConst";
-
 export const signInAction = ({ info, navigate }) => {
     return async (dispatch) => {
         let res = await fetch(API_ACCOUNTS.SIGNIN, {
