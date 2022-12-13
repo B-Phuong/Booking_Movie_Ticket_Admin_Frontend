@@ -92,7 +92,7 @@ export default function SignIn() {
                     <div>
                         <div className="signin">
                             <label>Tài khoản</label>
-                            <input type="text" placeholder="Nhập mật khẩu"
+                            <input type="text" placeholder="Nhập tài khoản"
                                 onChange={(e) =>
                                     setUserName(e.target.value)
                                 } />

@@ -1,10 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StoreContext } from "../../Redux/Store/Store";
-import {
-  API_MOVIE,
-  API_ROOMS,
-  API_SHOWTIMES,
-} from "../../common/ApiController";
 import { Col, FloatingLabel, Modal, Row } from "react-bootstrap";
 
 import isEmpty from "validator/lib/isEmpty";
@@ -14,6 +9,8 @@ import { Form } from "react-bootstrap";
 import { Button } from "../Button/Button";
 import { addShowtimeAction } from "../../Redux/Action/ShowtimeActions";
 import { getAllRoomsAction } from "../../Redux/Action/RoomActions"
+import Swal from "sweetalert2";
+import SweetAlert from "react-swal";
 
 function AddShowtimeModal(props) {
   const [isShow, setInvokeModal] = useState(false);
@@ -31,7 +28,13 @@ function AddShowtimeModal(props) {
     phutChieu: "",
     tenRap: "",
   };
-  const [detailShowtime, setDetailShowtime] = React.useState(emptyShowtime);
+  let emptyList = {
+    ngayChieu: "",
+    tenRap: "",
+    giaVe: "",
+  }
+  const [detailShowtime, setDetailShowtime] = useState(emptyShowtime);
+  const [listShowtimes, setListShowtimes] = useState([]);
   // console.log("*", detailShowtime);
   // console.log("**", props.clusterName);
 
@@ -58,30 +61,39 @@ function AddShowtimeModal(props) {
     getAllRoomsAction({ store })
   }, []);
 
-
+  const [fail, setFail] = useState(false)
+  let failed
   const AddShowtimeAction = async (e) => {
     e.preventDefault();
-    let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
-    // console.log(">> formatDateTime", formatDateTime);
-    // swal({
-    //   icon: "info",
-    //   title: "Xin chờ giây lát",
-    //   buttons: false,
-    //   closeOnClickOutside: false,
-    // });
-    let body = {
-      ngayChieu: formatDateTime,
-      tenRap: detailShowtime.tenRap,
-      tenCumRap: props.clusterID,
-      giaVe: detailShowtime.giaVe,
-    }
+    // let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
+    // let body = {
+    //   ngayChieu: formatDateTime,
+    //   tenRap: detailShowtime.tenRap,
+    //   tenCumRap: props.clusterID,
+    //   giaVe: detailShowtime.giaVe,
+    // }
+
+    let body = listShowtimes
     addShowtimeAction({ store, body, navigate, props })
+    failed = store.movie?.FailedShowtimes?.failed
+    console.log(">> res in UI not action", failed)
+    if (failed != undefined) {
+      setFail(true)
+      setListShowtimes([])
+    }
+    else {
+      setFail(false)
+    }
   };
   let rooms = store.lsRooms?.Rooms?.rooms;
+  if (rooms) {
+    rooms = rooms.sort((a, b) => a.tenRap.localeCompare(b.tenRap));
+  }
   const initModal = () => {
     setInvokeModal(!isShow);
     setDetailShowtime(emptyShowtime);
     rooms = rooms.sort((a, b) => a.tenRap.localeCompare(b.tenRap));
+    setListShowtimes([])
   };
   const formattedDate = (dateInput) => {
     let today = new Date(dateInput);
@@ -130,10 +142,59 @@ function AddShowtimeModal(props) {
       }
     }
   };
+  const handleAddList = (e, movie) => {
+    console.log(">> listShowtimes test")
+    let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
 
+    const getHour = (datetime) => {
+      let getTime = datetime.split(" ")[1]
+      return Number(getTime.split(":")[0])
+    }
+    const getDate = (datetime) => {
+      return datetime.split(" ")[0]
+    }
+    // let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
+    // let body = {
+    //   ngayChieu: formatDateTime,
+    //   tenRap: detailShowtime.tenRap,
+    //   tenCumRap: props.clusterID,
+    //   giaVe: detailShowtime.giaVe,
+    // }
+    let tenRap = document.querySelectorAll('select')[0].querySelector(`option[value="${detailShowtime.tenRap}"]`)
+
+    let body = {
+      ngayChieu: formatDateTime,
+      tenRapBangChu: tenRap.innerHTML,
+      tenRap: detailShowtime.tenRap,
+      tenCumRap: props.clusterID,
+      giaVe: detailShowtime.giaVe,
+
+    }
+
+    let compareSameValues = listShowtimes.filter((item) => item.ngayChieu === body.ngayChieu
+      && item.tenRap === body.tenRap);
+
+    let compareSameTheaterWHourLess3 = listShowtimes.filter((item) => getDate(item.ngayChieu) === getDate(body.ngayChieu)
+      && getHour(item.ngayChieu) + 3 > getHour(body.ngayChieu) && item.tenRap === body.tenRap);
+
+    console.log(">> compareSameValues", compareSameValues)
+    console.log(">> compareSameTheaterWHourLess3", compareSameTheaterWHourLess3)
+    if (compareSameValues.length === 0) {
+      if (compareSameTheaterWHourLess3.length !== 0)
+        return Swal.fire('Giờ chiếu nên cách nhau 3 tiếng để đảm bảo')
+      console.log(">> listShowtimes", [...listShowtimes, body])
+      return setListShowtimes([...listShowtimes, body])
+    } else return Swal.fire('Lịch chiếu này đã được thêm vào lúc nãy')
+
+  }
   var today = new Date();
-  var tomorrow = new Date();
-  tomorrow.setDate(today.getDate() + 1);
+  var chooseDate = new Date();
+  var startDate = new Date(props.startDate)
+  if (today > startDate)
+    chooseDate.setDate(today.getDate() + 1);
+  else {
+    chooseDate.setFullYear(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
+  }
   return (
     <div>
       <Button
@@ -145,17 +206,19 @@ function AddShowtimeModal(props) {
         fontWeight="bold"
         onClick={initModal}
       />
-      <Form id="edit-form" style={{ maxWidth: "800px" }} onSubmit={handleClick}>
+      <Form id="edit-form" style={{ maxWidth: "800px" }}>
         <Modal size="lg" show={isShow}>
           <Modal.Header closeButton onClick={initModal}>
             <Modal.Title style={{ fontWeight: "bold" }}>
               THÊM LỊCH CHIẾU CHO RẠP{" "}
               <span style={{ color: "#e98d9d" }}>{props.clusterName}</span>
+              <br />
+              Phim khởi chiếu ngày {formattedDate(new Date(props.startDate))}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div style={{ background: "transparent", maxWidth: "800px" }}>
-              <Form style={{ maxWidth: "800px" }} onSubmit={handleClick}>
+              <Form style={{ maxWidth: "800px" }}>
                 <Row className="mb-3">
                   <Form.Group as={Col} md="4">
                     <FloatingLabel
@@ -168,7 +231,7 @@ function AddShowtimeModal(props) {
                         required
                         type="date"
                         name="ngayChieu"
-                        min={formattedDate(tomorrow)}
+                        min={formattedDate(chooseDate)}
                         onChange={(e) => {
                           checkValid(e);
                           checkPrice(e);
@@ -275,6 +338,35 @@ function AddShowtimeModal(props) {
                       </Form.Control.Feedback>
                     </FloatingLabel>
                   </Form.Group>
+
+                  <Form.Group as={Col} md="4">
+
+                    Các suất chiếu sẽ thêm  <br></br>
+                    {
+                      !fail ?
+                        listShowtimes?.map((item) => {
+                          return (
+                            <>
+                              {item.tenRapBangChu} &nbsp;
+                              {formattedDate(new Date(item.ngayChieu))} &nbsp;
+                              {item.giaVe} <br />
+                            </>
+                          )
+                        })
+                        :
+                        failed?.map((item) => {
+                          return (
+                            <>
+                              {console.log(">> test", item)}
+                              {item.error} &nbsp;
+                              {/* {formattedDate(new Date(item.showtime.ngayChieu))} &nbsp; */}
+                              <br />
+                            </>
+                          )
+                        })
+                    }
+                  </Form.Group>
+
                 </Row>
               </Form>
             </div>
@@ -300,6 +392,14 @@ function AddShowtimeModal(props) {
                 onClick={initModal}
               >
                 Hủy
+              </button>
+              <button
+                name="Thêm"
+                borderRadius="0.4em"
+                disabled={isInvalid === undefined ? true : isInvalid}
+                onClick={(e, movie) => handleAddList(e, movie)}
+              >
+                Thêm
               </button>
             </div>
           </Modal.Footer>

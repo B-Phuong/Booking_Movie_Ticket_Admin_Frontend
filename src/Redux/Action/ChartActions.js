@@ -4,8 +4,9 @@ import Reducer from '../Reducer/ReducerAccounts'
 import { SIGN_IN } from "../Constant/accountConst";
 import { useContext } from "react";
 import { StoreContext } from "../Store/Store";
-let token = JSON.parse(localStorage.getItem("token"));
+
 export const getStaticAction = async ({ store }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_CHARTS.GETTICKETS, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -36,6 +37,7 @@ export const getStaticAction = async ({ store }) => {
 }
 
 export const getQuarterlyRevenueAction = ({ store, info }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     fetch(API_CHARTS.GETREVENUE, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -54,6 +56,7 @@ export const getQuarterlyRevenueAction = ({ store, info }) => {
         });
 }
 export const getShowtimeTicketSold = async ({ store }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_CHARTS.GETTICKETS, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -96,6 +99,7 @@ export const getTop10User = async ({ store }) => {
 }
 
 export const getRevenueByTheater = async ({ store }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_CHARTS.GET_REVENUE_BY_THEATER, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -111,6 +115,7 @@ export const getRevenueByTheater = async ({ store }) => {
 }
 
 export const getTimelineOfShowtime = async ({ store }) => {
+    let token = JSON.parse(localStorage.getItem("token"));
     let res = await fetch(API_CHARTS.GET_TIMELINE_SHOWTIME, {
         headers: {
             Authorization: `Bearer ${token}`,

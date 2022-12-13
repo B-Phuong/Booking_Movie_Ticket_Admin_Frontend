@@ -34,6 +34,7 @@ const Store = ({ children }) => {
   const [adminDetail, DispatchAdminDetail] = ReducerUsers(null);
   const [revenueByTheater, DispatchRevenueByTheater] = ReducerTheaters(null);
   const [timelineOfShowtime, DispatchTimelineOfShowtime] = ReducerShowtimes(null);
+  const [failedShowtimes, DispatchFailedShowtimes] = ReducerShowtimes(null);
 
   const store = {
     lsComingMovie: {
@@ -56,6 +57,9 @@ const Store = ({ children }) => {
 
       TopMovies: topMovies,
       TopMoviesDispatch: DispatchTopMovies,
+
+      FailedShowtimes: failedShowtimes,
+      FailedShowtimesDispatch: DispatchFailedShowtimes
     },
     ticketBooking: {
       GetAllTicketBooking: getAllTicketBooking,

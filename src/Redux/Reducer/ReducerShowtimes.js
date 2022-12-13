@@ -7,6 +7,9 @@ function GetShowtimes(state, { type, payload }) {
       return { ...state, rooms: payload };
     case "GET_TIMELINE":
       return { ...state, timeline: payload };
+    case "GET_FAILEDSHOWTIMES":
+      console.log(">> in,", payload)
+      return { ...state, failed: payload };
     default:
       return state;
   }

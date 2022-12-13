@@ -45,12 +45,18 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
             } else return res.json();
         })
         .then((response) => {
-            if (response != true)
-                return swal({
+            if (response != true) {
+                store.movie.FailedShowtimesDispatch({
+                    type: "GET_FAILEDSHOWTIMES",
+                    payload: response.data,
+                });
+                console.log(">> response.data", response.data)
+                swal({
                     title: "Thêm lịch chiếu thất bại",
                     text: response.error,
                     icon: "error",
                 });
+            }
         });
 }
 

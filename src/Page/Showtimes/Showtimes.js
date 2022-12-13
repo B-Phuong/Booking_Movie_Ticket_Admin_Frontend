@@ -54,11 +54,15 @@ export default function Showtimes() {
   }, [slug.slug]);
 
   const theaters = store.lsTheater.Theater?.lsTheater;
-  const movieDetail = store.movie?.DetailMovie?.detailMovie;
+  let movieDetail = store.movie?.DetailMovie?.detailMovie;
+  let lichChieu
+  if (movieDetail)
+    lichChieu = movieDetail?.lichChieu.sort((a, b) =>
+      a.tenRap.tenRap.localeCompare(b.tenRap.tenRap))
   // console.log(
   //   ">> movieDetail?.lichChieu?.tenRap",
-  //   movieDetail?.lichChieu.sort((a, b) =>
-  //     a.tenRap.tenRap.localeCompare(b.tenRap.tenRap)
+  // movieDetail?.lichChieu.sort((a, b) =>
+  //   a.tenRap.tenRap.localeCompare(b.tenRap.tenRap)
   //   )
   // );
   const handleDelete = (id) => {
@@ -137,6 +141,7 @@ export default function Showtimes() {
                                 />
                               )}
                               <AddShowtimeModal
+                                startDate={movieDetail?.ngayKhoiChieu}
                                 clusterName={theater.tenCumRap}
                                 clusterID={theater._id}
                                 slug={slug.slug}
@@ -156,7 +161,7 @@ export default function Showtimes() {
                                     height: "fit-content"
                                   }}
                                 >
-                                  {movieDetail?.lichChieu?.map((item) => {
+                                  {lichChieu?.map((item) => {
                                     if (item.tenCumRap._id == theater._id) {
                                       return (
                                         <>

@@ -33,7 +33,7 @@ export default function AdminMenu() {
             </li>
             <ul className="sub-menu collapse" id="service">
               <li> <NavLink end to="Foods" >Danh sách combo</NavLink></li>
-              <li> <NavLink end to="Foods/Add" >Thêm đồ ăn</NavLink></li>
+              <li> <NavLink end to="Foods/Add" >Tạo combo mới</NavLink></li>
             </ul>
 
 

@@ -27,6 +27,6 @@ const CheckExpiredToken = () => {
           return;
       }
     });
-  }, countdown);
+  }, countdown)
 };
 export default CheckExpiredToken;
