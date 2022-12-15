@@ -62,5 +62,5 @@ export const logOut = ({ store, navigate }) => {
         type: "SIGN_IN",
         payload: localStorage.getItem("taiKhoan"),
     });
-    navigate("/AdminSignIn")
+    navigate("/")
 }

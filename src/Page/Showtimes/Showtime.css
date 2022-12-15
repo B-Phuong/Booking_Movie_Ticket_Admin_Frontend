@@ -4,5 +4,5 @@
     padding: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 260px;
+    max-height: 380px;
 }

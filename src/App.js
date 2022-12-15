@@ -37,12 +37,12 @@ function App() {
         <Routes >
 
           {/* <Route path="/" element={<Home />} /> */}
-          <Route exact path="/AdminSignIn" element={<SignIn />} />
+          <Route exact path="/" element={<SignIn />} />
           <Route element={<PrivateAdminRoutes />}>
 
             <Route index path="/Admin/*" element={<AdminMenu />} />
           </Route>
-          <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} />
+          {/* <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} /> */}
           {/* <Route element={<PrivateAdminRoutes />}>
             <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} />
           </Route> */}

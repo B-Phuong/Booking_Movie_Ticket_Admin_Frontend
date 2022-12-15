@@ -9,8 +9,10 @@ const spinner = () => {
     swal2.showLoading()
 }
 export const addShowtimeAction = async ({ store, body, navigate, props }) => {
+
     spinner()
     const token = JSON.parse(localStorage.getItem("token"));
+    console.log(">> new Showtime", JSON.stringify(body))
     fetch(API_SHOWTIMES.ADD + props.slug + "/showtime", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +50,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
             if (response != true) {
                 store.movie.FailedShowtimesDispatch({
                     type: "GET_FAILEDSHOWTIMES",
-                    payload: response.data,
+                    payload: response.data
                 });
                 console.log(">> response.data", response.data)
                 swal({

@@ -8,7 +8,6 @@ function GetShowtimes(state, { type, payload }) {
     case "GET_TIMELINE":
       return { ...state, timeline: payload };
     case "GET_FAILEDSHOWTIMES":
-      console.log(">> in,", payload)
       return { ...state, failed: payload };
     default:
       return state;

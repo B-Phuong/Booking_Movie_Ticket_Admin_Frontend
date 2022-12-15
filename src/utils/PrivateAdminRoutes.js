@@ -10,6 +10,6 @@ const PrivateAdminRoutes = () => {
     JSON.parse(localStorage.getItem("maLoaiNguoiDung")) == "0" ? true : false;
 
   // console.log(">> isAdmin", isAdmin)
-  return isAdmin ? <Outlet /> : token ? navigate(-1) : navigate("/AdminSignIn");
+  return isAdmin ? <Outlet /> : token ? navigate(-1) : navigate("/");
 };
 export default PrivateAdminRoutes;
