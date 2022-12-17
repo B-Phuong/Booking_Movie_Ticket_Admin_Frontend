@@ -12,7 +12,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
 
     spinner()
     const token = JSON.parse(localStorage.getItem("token"));
-    console.log(">> new Showtime", JSON.stringify(body))
+    // console.log(">> new Showtime", JSON.stringify(body))
     fetch(API_SHOWTIMES.ADD + props.slug + "/showtime", {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
                 });
                 setTimeout(function () {
                     localStorage.clear();
-                    navigate("/signIn");
+                    navigate("/");
                 }, 1000);
             }
             if (res.status == 201) {
@@ -52,7 +52,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
                     type: "GET_FAILEDSHOWTIMES",
                     payload: response.data
                 });
-                console.log(">> response.data", response.data)
+                // console.log(">> response.data", response.data)
                 swal({
                     title: "Thêm lịch chiếu thất bại",
                     text: response.error,

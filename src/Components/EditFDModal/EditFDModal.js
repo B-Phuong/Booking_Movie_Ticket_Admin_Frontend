@@ -62,8 +62,8 @@ function EditFDModal(props) {
     }
     if (
       (isEmpty(temp.value) ||
-        temp.checkValidity() == false ||
-        temp.value.trim() == 0) &&
+        temp.checkValidity() === false ||
+        temp.value.trim() === 0) &&
       temp.required
     ) {
       event.preventDefault();
@@ -160,8 +160,8 @@ function EditFDModal(props) {
       <Form
         id="edit-form"
         style={{ maxWidth: "800px" }}
-        noValidate
-        validated={validated}
+        // noValidate
+        // validated={validated}
         onSubmit={handleEdit}
       >
         <Modal size="lg" show={isShow}>
@@ -181,8 +181,8 @@ function EditFDModal(props) {
               <div style={{ background: "transparent", maxWidth: "800px" }}>
                 <Form
                   style={{ maxWidth: "800px" }}
-                  noValidate
-                  validated={validated}
+                  // noValidate
+                  // validated={validated}
                   onSubmit={handleEdit}
                 >
                   <Row className="mb-3">
@@ -215,6 +215,7 @@ function EditFDModal(props) {
                           value={detailFD?.soLuongBan}
                           required
                           readOnly
+                          disabled
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -226,14 +227,19 @@ function EditFDModal(props) {
                       name="moTa"
                       rows={4}
                       value={detailFD?.moTa}
+                      required
                       disabled={!isEdit}
                       onChange={(event) => {
+                        checkValid(event);
                         setDetailFD({
                           ...detailFD,
                           moTa: event.target.value,
                         });
                       }}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Thêm mô tả cho combo
+                    </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Ghi chú</Form.Label>
@@ -260,6 +266,7 @@ function EditFDModal(props) {
                       >
                         <Form.Control
                           type={isEdit ? "number" : "text"}
+                          className="edit-fd"
                           name="giaGoc"
                           min={"1000"}
                           step={"1000"}
@@ -298,8 +305,9 @@ function EditFDModal(props) {
                       >
                         <Form.Control
                           type={isEdit ? "number" : "text"}
+                          className="edit-fd"
                           name="giamGia"
-                          min={"0"}
+                          min={0}
                           value={
                             isEdit
                               ? detailFD?.giamGia

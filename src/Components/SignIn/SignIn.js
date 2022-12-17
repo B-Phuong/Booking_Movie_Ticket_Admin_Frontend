@@ -75,8 +75,8 @@ export default function SignIn() {
         }
         else
             swal({
-                title: "Tài khoản hoặc mật khẩu chưa đúng",
-                text: "Hãy thử lại",
+                title: "Đăng nhập thất bại",
+                text: dataUser.error,
                 icon: "warning",
                 dangerMode: true,
             });

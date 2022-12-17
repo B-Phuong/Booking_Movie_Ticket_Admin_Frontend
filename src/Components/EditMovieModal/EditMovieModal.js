@@ -192,8 +192,8 @@ function EditMovieModal(props) {
       <Form
         id="edit-form"
         style={{ maxWidth: "800px" }}
-        noValidate
-        validated={validated}
+        // noValidate
+        // validated={validated}
         onSubmit={handleEdit}
       >
         <Modal size="lg" show={isShow}>
@@ -214,7 +214,7 @@ function EditMovieModal(props) {
                 <Form
                   style={{ maxWidth: "800px" }}
                   noValidate
-                  validated={validated}
+                  // validated={validated}
                   onSubmit={handleEdit}
                 >
                   <Row className="mb-3">

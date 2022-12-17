@@ -36,8 +36,8 @@ function AddFDForm(props) {
     }
     if (
       (isEmpty(temp.value) ||
-        temp.checkValidity() == false ||
-        temp.value.trim() == 0) &&
+        temp.checkValidity() === false ||
+        temp.value.trim() === 0) &&
       temp.required
     ) {
       event.preventDefault();

@@ -138,7 +138,7 @@ function AddShowtimeModal(props) {
   };
   const handleAddList = (e, movie) => {
     setFail(false)
-    console.log(">> listShowtimes test")
+    // console.log(">> listShowtimes test")
     let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
 
     const getHour = (datetime) => {
@@ -170,7 +170,7 @@ function AddShowtimeModal(props) {
     if (compareSameValues.length === 0) {
       if (compareSameTheaterWHourLess3.length !== 0)
         return Swal.fire('Giờ chiếu nên cách nhau 3 tiếng để đảm bảo')
-      console.log(">> listShowtimes", [...listShowtimes, body])
+      // console.log(">> listShowtimes", [...listShowtimes, body])
       return setListShowtimes([...listShowtimes, body])
     } else return Swal.fire('Lịch chiếu này đã được thêm vào lúc nãy')
 

@@ -29,7 +29,7 @@ export const addMovieAction = async ({ store, fd, navigate }) => {
                 });
                 setTimeout(function () {
                     localStorage.clear();
-                    navigate("/signIn");
+                    navigate("/");
                 }, 1000);
             }
             if (res.status == 201) {
@@ -66,6 +66,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
         body: fd,
     });
     swal2.close()
+    let data = res.json()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",
@@ -75,7 +76,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/signIn");
+            navigate("/");
         }, 1000);
     }
     if (res.status === 200) {
@@ -92,7 +93,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
     } else
         swal({
             title: "Cập nhật thất bại",
-            text: "Hãy thử lại",
+            text: data.error,
             icon: "warning",
             buttons: true,
             dangerMode: true,

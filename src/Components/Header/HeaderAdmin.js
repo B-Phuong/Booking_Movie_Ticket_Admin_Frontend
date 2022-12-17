@@ -1,6 +1,5 @@
 
 import React, { useContext, useEffect, useState } from 'react';
-import Navbar from '../Navbar/Navbar'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../Redux/Store/Store';
 // import { Link } from 'react-scroll'; // react-scroll is a library for scrolling in React

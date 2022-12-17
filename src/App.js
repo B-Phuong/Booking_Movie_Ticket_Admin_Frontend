@@ -7,8 +7,6 @@ import PrivateAdminRoutes from "./utils/PrivateAdminRoutes";
 
 import SignIn from "./Components/SignIn/SignIn";
 import AdminMenu from "./Page/AdminMenu";
-import HeaderAdmin from "./Components/Header/HeaderAdmin";
-
 
 
 function App() {
@@ -37,10 +35,9 @@ function App() {
         <Routes >
 
           {/* <Route path="/" element={<Home />} /> */}
-          <Route exact path="/" element={<SignIn />} />
+          <Route path="/" element={<SignIn />} />
           <Route element={<PrivateAdminRoutes />}>
-
-            <Route index path="/Admin/*" element={<AdminMenu />} />
+            <Route path="/Admin/*" element={<AdminMenu />} />
           </Route>
           {/* <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} /> */}
           {/* <Route element={<PrivateAdminRoutes />}>

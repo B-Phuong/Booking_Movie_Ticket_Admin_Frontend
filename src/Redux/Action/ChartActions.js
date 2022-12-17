@@ -4,6 +4,14 @@ import Reducer from '../Reducer/ReducerAccounts'
 import { SIGN_IN } from "../Constant/accountConst";
 import { useContext } from "react";
 import { StoreContext } from "../Store/Store";
+const warningAlert = (error, title = "Xảy ra lỗi") => {
+    swal({
+        title: title,
+        text: error,
+        icon: "warning",
+        dangerMode: true,
+    })
+}
 
 export const getStaticAction = async ({ store }) => {
     let token = JSON.parse(localStorage.getItem("token"));
@@ -15,6 +23,9 @@ export const getStaticAction = async ({ store }) => {
         method: "GET",
     })
     let response = await res.json()
+    if (res.status === 503) {
+        warningAlert(response.error)
+    }
     let getYear = (date) => {
         return new Date(date).getFullYear()
     }
@@ -65,6 +76,9 @@ export const getShowtimeTicketSold = async ({ store }) => {
         method: "GET",
     })
     let data = await res.json()
+    if (res.status === 503) {
+        warningAlert(data.error)
+    }
     store.ticketBooking.TicketBookingDispatch({
         type: "GETTICKETBOOKINGS",
         payload: data.data,

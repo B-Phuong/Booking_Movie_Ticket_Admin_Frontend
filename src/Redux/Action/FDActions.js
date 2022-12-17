@@ -8,6 +8,7 @@ const spinner = () => {
     })
     swal2.showLoading()
 }
+
 export const addFDAction = async ({ store, fd, navigate }) => {
     spinner()
     const token = JSON.parse(localStorage.getItem("token"));
@@ -18,6 +19,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
         method: "POST",
         body: fd,
     });
+    let message = await res.json()
     swal2.close()
     if (res.status === 401) {
         swal({
@@ -28,7 +30,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/signIn");
+            navigate("/");
         }, 1000);
     }
     if (res.status === 201) {
@@ -44,7 +46,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
     } else
         swal({
             title: "Thêm thất bại",
-            text: "Hãy thử lại",
+            text: message.error,
             icon: "warning",
             dangerMode: true,
         });
@@ -61,6 +63,7 @@ export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => 
         body: fd,
     });
     swal2.close()
+    let message = await res.json()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",
@@ -70,7 +73,7 @@ export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => 
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/signIn");
+            navigate("/");
         }, 1000);
     }
     if (res.status === 200) {
@@ -86,7 +89,7 @@ export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => 
     } else
         swal({
             title: "Cập nhật thất bại",
-            text: "Hãy thử lại",
+            text: message.error,
             icon: "warning",
             dangerMode: true,
         });
@@ -107,9 +110,8 @@ export const getDetailFDAction = async ({ store, setDetailFD, setLoading, biDanh
                 giaGoc: dt.data?.giaGoc,
                 hinhAnh: dt.data?.hinhAnh,
                 giamGia: dt.data?.giamGia,
-                soLuongBan: dt.data?.soLuongBan.toString(),
+                soLuongBan: dt.data?.soLuongBan?.toString(),
             });
-
             setLoading(false);
         });
 }
@@ -137,6 +139,7 @@ export const deleteFDAction = async ({ store, props, navigate }) => {
         method: "DELETE",
     });
     swal2.close()
+    let message = await res.json()
     if (res.status === 401) {
         swal({
             title: "Vui lòng đăng nhập lại",
@@ -146,7 +149,7 @@ export const deleteFDAction = async ({ store, props, navigate }) => {
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/signIn");
+            navigate("/");
         }, 1000);
     }
     if (res.status === 200) {
@@ -160,7 +163,7 @@ export const deleteFDAction = async ({ store, props, navigate }) => {
     } else
         swal({
             title: "Xóa combo thất bại",
-            text: "Hãy thử lại",
+            text: message.error,
             icon: "warning",
             dangerMode: true,
         });

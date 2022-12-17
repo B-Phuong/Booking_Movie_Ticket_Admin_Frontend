@@ -16,7 +16,7 @@ const ItemFoodDrink = ({ index, fooddrinks }) => {
                 {fooddrinks.tenCombo}
             </td>
             <td className="organisationname image">
-                <img height="80px" width="60px" src={fooddrinks.hinhAnh} alt={"Không tải được ảnh"} />
+                <img height="80px" width="60px" src={fooddrinks.hinhAnh} alt='upload-error.png' />
             </td>
             <td width="900px">
                 <div className="organisationname-description">

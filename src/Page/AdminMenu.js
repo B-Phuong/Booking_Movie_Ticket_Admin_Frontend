@@ -7,7 +7,6 @@ import AdminFoodDrinks from './AdminFoodsDrinks'
 import AdminMovies from './AdminMovies'
 import AdminUsers from './AdminUsers'
 import InfoAdmin from './InfoAdmin/InfoAdmin'
-import { IconName, RiMovie2Line } from "react-icons/ri";
 export default function AdminMenu() {
   return (
     <>
