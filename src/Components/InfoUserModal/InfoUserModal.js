@@ -185,7 +185,7 @@ function InfoUserModal(props) {
                           }}
                           variant="top"
                           src={detailUser?.anhDaiDien}
-                          alt={"Không tải được ảnh"}
+                          title={"Ảnh đại diện"}
                         />
                       </Card>
                     </Form.Group>

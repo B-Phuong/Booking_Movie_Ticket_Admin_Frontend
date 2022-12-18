@@ -64,7 +64,7 @@ export default function AllFoodDrinks2() {
       minHeight: "100px",
       // selector: row => row.moTa,
       cell: (row) => <td className="organisationname image" >
-        <img height="80px" width="60px" src={row.hinhAnh} alt={"Không tải được ảnh"} />
+        <img height="80px" width="60px" src={row.hinhAnh} title="Ảnh đại diện" />
       </td >,
     },
     {

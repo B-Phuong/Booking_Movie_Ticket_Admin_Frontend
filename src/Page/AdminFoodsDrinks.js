@@ -6,6 +6,7 @@ import AllFoodDrinks from "./FoodDrinks/AllFoodDrinks";
 import AddFDForm from "../Components/AddFDForm/AddFDForm";
 import EditMovieModal from "../Components/EditMovieModal/EditMovieModal";
 import AllFoodDrinks2 from "./FoodDrinks/AllFoodDrinks2";
+import NotFound from "../Components/NotFound/NotFound";
 
 export default function AdminFoodDrinks() {
   return (
@@ -18,6 +19,7 @@ export default function AdminFoodDrinks() {
           <Route path="/Add" element={<AddFDForm />} />
           <Route path="/:slug/showtimes" element={<Showtimes />} />
           <Route path="/Edit" element={<EditMovieModal />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </>

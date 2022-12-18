@@ -43,7 +43,7 @@ export const signInAction = ({ info, navigate }) => {
             });
 
             if (JSON.parse(localStorage.getItem("maLoaiNguoiDung")) === "0") {
-                navigate("/");
+                navigate("/AdminSignIn");
             } else
                 swal({
                     title: "Tài khoản hoặc mật khẩu chưa đúng",
@@ -62,5 +62,5 @@ export const logOut = ({ store, navigate }) => {
         type: "SIGN_IN",
         payload: localStorage.getItem("taiKhoan"),
     });
-    navigate("/")
+    navigate("/AdminSignIn")
 }

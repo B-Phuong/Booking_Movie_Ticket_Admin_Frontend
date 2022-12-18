@@ -29,7 +29,7 @@ export const addMovieAction = async ({ store, fd, navigate }) => {
                 });
                 setTimeout(function () {
                     localStorage.clear();
-                    navigate("/");
+                    navigate("/AdminSignIn");
                 }, 1000);
             }
             if (res.status == 201) {
@@ -76,7 +76,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/");
+            navigate("/AdminSignIn");
         }, 1000);
     }
     if (res.status === 200) {

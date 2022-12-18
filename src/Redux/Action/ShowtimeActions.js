@@ -32,7 +32,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
                 });
                 setTimeout(function () {
                     localStorage.clear();
-                    navigate("/");
+                    navigate("/AdminSignIn");
                 }, 1000);
             }
             if (res.status == 201) {

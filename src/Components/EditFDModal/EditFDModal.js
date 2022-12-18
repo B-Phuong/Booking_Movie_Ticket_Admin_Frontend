@@ -352,6 +352,7 @@ function EditFDModal(props) {
                           }}
                           variant="top"
                           src={image || detailFD?.hinhAnh}
+                          title="Hình ảnh"
                         />
                       </Card>
                       <Form.Control.Feedback type="invalid">

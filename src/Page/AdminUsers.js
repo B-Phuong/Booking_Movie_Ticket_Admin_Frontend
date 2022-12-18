@@ -5,6 +5,7 @@ import "../App.css";
 import { Link, NavLink } from "react-router-dom";
 import AllUsers from "./Users/AllUsers";
 import AllUsers2 from "./Users/AllUsers2";
+import NotFound from "../Components/NotFound/NotFound";
 
 // const MenuFDAdmin = React.memo(() => (
 //   <div className="vertical-menu">
@@ -20,6 +21,7 @@ export default function AdminUsers() {
     <div className="general" style={{ marginTop: "1em" }}>
       <Routes>
         <Route path="/" element={<AllUsers2 />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
     /* <div className="vertical-menu">

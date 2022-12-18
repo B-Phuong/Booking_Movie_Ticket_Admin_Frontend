@@ -30,7 +30,7 @@ export const addFDAction = async ({ store, fd, navigate }) => {
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/");
+            navigate("/AdminSignIn");
         }, 1000);
     }
     if (res.status === 201) {
@@ -73,7 +73,7 @@ export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => 
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/");
+            navigate("/AdminSignIn");
         }, 1000);
     }
     if (res.status === 200) {
@@ -149,7 +149,7 @@ export const deleteFDAction = async ({ store, props, navigate }) => {
         });
         setTimeout(function () {
             localStorage.clear();
-            navigate("/");
+            navigate("/AdminSignIn");
         }, 1000);
     }
     if (res.status === 200) {

@@ -1,6 +1,7 @@
 
 import { NavLink, Route, Routes } from 'react-router-dom'
 import HeaderAdmin from '../Components/Header/HeaderAdmin'
+import NotFound from '../Components/NotFound/NotFound'
 import './Admin.css'
 import AdminCharts from './AdminCharts'
 import AdminFoodDrinks from './AdminFoodsDrinks'
@@ -57,6 +58,7 @@ export default function AdminMenu() {
           <Route path="Foods/*" element={<AdminFoodDrinks />} />
           <Route path="Users/*" element={<AdminUsers />} />
           <Route path="Charts/*" element={<AdminCharts />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
 

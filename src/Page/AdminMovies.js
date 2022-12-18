@@ -6,6 +6,7 @@ import Showtimes from "./Showtimes/Showtimes";
 import AllMoviesTest from "./Movies/AllMoviesTest";
 import EditMovieModal from "../Components/EditMovieModal/EditMovieModal";
 import AllMovies2 from "./Movies/AllMovies2";
+import NotFound from "../Components/NotFound/NotFound";
 // const MenuAdmin = React.memo(() => (
 //   <div className="vertical-menu">
 //     <NavLink defaultValue end to="/Admin">
@@ -28,6 +29,7 @@ export default function AdminMovies() {
           <Route path="/Add" element={<AddMovieForm />} />
           <Route path="/:slug/showtimes" element={<Showtimes />} />
           <Route path="/Edit" element={<EditMovieModal />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </>

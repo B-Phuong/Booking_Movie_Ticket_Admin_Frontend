@@ -65,7 +65,7 @@ export default function AllUsers2() {
       minHeight: "120px",
       // selector: row => row.moTa,
       cell: (row) => <td className="organisationname image" >
-        <img height="80px" width="60px" style={{ width: "80px" }} src={row.anhDaiDien} alt="Không tải được ảnh" />
+        <img height="80px" width="60px" style={{ width: "80px" }} src={row.anhDaiDien} title="Ảnh đại diện" />
       </td >,
     },
     {

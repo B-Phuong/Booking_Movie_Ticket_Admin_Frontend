@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, } from "react";
 import { StoreContext } from "./Redux/Store/Store";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
@@ -7,7 +7,7 @@ import PrivateAdminRoutes from "./utils/PrivateAdminRoutes";
 
 import SignIn from "./Components/SignIn/SignIn";
 import AdminMenu from "./Page/AdminMenu";
-
+import NotFound from "./Components/NotFound/NotFound";
 
 function App() {
   const store = useContext(StoreContext);
@@ -18,27 +18,29 @@ function App() {
     });
   }, [localStorage.getItem("taiKhoan")]);
 
-  useEffect(() => {
-    if (store.accounts.userAccount.account) {
-      store.accounts.AccountDispatch({
-        type: "SIGN_IN",
-        payload: localStorage.getItem("taiKhoan"),
-      });
+  // useEffect(() => {
+  //   if (store.accounts.userAccount.account) {
+  //     store.accounts.AccountDispatch({
+  //       type: "SIGN_IN",
+  //       payload: localStorage.getItem("taiKhoan"),
+  //     });
 
-    }
-  }, [store.accounts.userAccount.account]);
+  //   }
+  // }, [store.accounts.userAccount.account]);
   return (
     <div>
       <BrowserRouter>
         {/* <HeaderAdmin /> */}
-
         <Routes >
 
-          {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/" element={<SignIn />} />
+          <Route path="/AdminSignIn" element={<SignIn />} />
+
           <Route element={<PrivateAdminRoutes />}>
+            <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} />
             <Route path="/Admin/*" element={<AdminMenu />} />
+
           </Route>
+          <Route path="*" element={<NotFound />} />
           {/* <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} /> */}
           {/* <Route element={<PrivateAdminRoutes />}>
             <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} />

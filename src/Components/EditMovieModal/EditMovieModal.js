@@ -447,6 +447,7 @@ function EditMovieModal(props) {
                           style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                           variant="top"
                           src={banner || detailMovie?.anhBia}
+                          title="Ảnh bìa phim"
                         />
                       </Card>
                     </Form.Group>
@@ -468,6 +469,7 @@ function EditMovieModal(props) {
                           style={{ maxHeight: "8rem", maxWidth: "fit-content" }}
                           variant="top"
                           src={image || detailMovie?.hinhAnh}
+                          title="Hình ảnh phim"
                         />
                       </Card>
                     </Form.Group>
