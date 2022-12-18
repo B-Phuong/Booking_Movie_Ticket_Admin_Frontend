@@ -11,7 +11,6 @@
     "@testing-library/user-event": "^13.5.0",
     "apexcharts": "^3.36.3",
     "bootstrap": "^5.2.1",
-    "dotenv": "^16.0.2",
     "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
