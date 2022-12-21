@@ -28,11 +28,6 @@ function AddShowtimeModal(props) {
     phutChieu: "",
     tenRap: "",
   };
-  let emptyList = {
-    ngayChieu: "",
-    tenRap: "",
-    giaVe: "",
-  }
   const [detailShowtime, setDetailShowtime] = useState(emptyShowtime);
   const [listShowtimes, setListShowtimes] = useState([]);
   const [failed, setFailedList] = useState([])
@@ -141,10 +136,15 @@ function AddShowtimeModal(props) {
     // console.log(">> listShowtimes test")
     let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
 
-    const getHour = (datetime) => {
-      let getTime = datetime.split(" ")[1]
-      return Number(getTime.split(":")[0])
+    const getTimeEnd = (datetime) => {
+      let getTime = new Date(datetime).getTime() + (props.duration + 10) * 60000; // thêm 10p để rạp chuẩn bị suất chiếu tiếp theo
+      console.log(">> getTime", getTime)
+      return getTime
     }
+    const getTime = (datetime) => {
+      return new Date(datetime).getTime()
+    }
+    getTimeEnd(formatDateTime)
     const getDate = (datetime) => {
       return datetime.split(" ")[0]
     }
@@ -156,23 +156,33 @@ function AddShowtimeModal(props) {
       tenRapBangChu: tenRap.innerHTML,
       tenRap: detailShowtime.tenRap,
       tenCumRap: props.clusterID,
-      giaVe: detailShowtime.giaVe,
+      giaVe: detailShowtime.giaVe
     }
-
     let compareSameValues = listShowtimes.filter((item) => item.ngayChieu === body.ngayChieu
       && item.tenRap === body.tenRap);
 
-    let compareSameTheaterWHourLess3 = listShowtimes.filter((item) => getDate(item.ngayChieu) === getDate(body.ngayChieu)
-      && getHour(item.ngayChieu) + 3 > getHour(body.ngayChieu) && getHour(item.ngayChieu) < getHour(body.ngayChieu) && item.tenRap === body.tenRap);
-
+    let compareSameTheaterWValidHourEnd = listShowtimes.filter((item) => getDate(item.ngayChieu) === getDate(body.ngayChieu) && item.tenRap === body.tenRap
+      && ((getTime(item.ngayChieu) < getTime(body.ngayChieu) && getTime(body.ngayChieu) < getTimeEnd(item.ngayChieu))
+        || getTime(item.ngayChieu) < getTimeEnd(body.ngayChieu) && getTimeEnd(body.ngayChieu) < getTimeEnd(item.ngayChieu)));
     // console.log(">> compareSameValues", compareSameValues)
-    // console.log(">> compareSameTheaterWHourLess3", compareSameTheaterWHourLess3)
-    if (compareSameValues.length === 0) {
-      if (compareSameTheaterWHourLess3.length !== 0)
-        return Swal.fire('Giờ chiếu nên cách nhau 3 tiếng để đảm bảo')
-      // console.log(">> listShowtimes", [...listShowtimes, body])
-      return setListShowtimes([...listShowtimes, body])
-    } else return Swal.fire('Lịch chiếu này đã được thêm vào lúc nãy')
+    // console.log(">> compareSameTheaterWValidHourEnd", compareSameTheaterWValidHourEnd)
+    //TH1: 19:20  -> 21:20
+    //TH2: 17:20 --> 19:20  16 --> 18
+
+    // 18:20 --> 20:20
+
+    // test: 13:10  --> 15:10 
+    // 17:30 --> 19:30
+    //   start < x < timeEnd || start <timeEnd(x) < timeEnd
+
+    if (listShowtimes.length > 0)
+      if (compareSameValues.length === 0) {
+        if (compareSameTheaterWValidHourEnd.length !== 0)
+          return Swal.fire(`Giờ chiếu cách nhau ${Math.floor((props.duration + 10) / 60)} giờ ${(props.duration + 10) % 60} phút`)
+        console.log(">> List showtimes", listShowtimes)
+        return setListShowtimes([...listShowtimes, body])
+      } else return Swal.fire('Lịch chiếu này đã được thêm vào lúc nãy')
+    else return setListShowtimes([body])
 
   }
   var today = new Date();
@@ -183,10 +193,12 @@ function AddShowtimeModal(props) {
   else {
     chooseDate.setFullYear(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
   }
-  const [editShowtime, setEditShowtime] = useState(false)
-  const handleEdit = (index) => {
-    setEditShowtime(true)
-    const editShowtime = failed[index]
+  const handleDelete = (item, e) => {
+    e.preventDefault()
+    let listAfterRemoveItem = listShowtimes.filter((showtime) => showtime !== item)
+    setListShowtimes(listAfterRemoveItem)
+    console.log(">> List showtimes", listShowtimes)
+
   }
   return (
     <div>
@@ -341,7 +353,21 @@ function AddShowtimeModal(props) {
                       <>
                         {item.tenRapBangChu} &nbsp;
                         {item.ngayChieu} &nbsp;
-                        {item.giaVe} <br />
+                        {item.giaVe} &nbsp;
+                        <Button
+                          color="black"
+                          name={<i className="fa fa-trash"></i>}
+                          background="pink"
+                          width="30px"
+                          height="30px"
+                          borderRadius="10.2em"
+                          fontWeight="bold"
+                          onClick={(e) => {
+
+                            handleDelete(item, e);
+                          }}
+                        />
+                        <br />
                       </>
                     )
                   })
@@ -382,7 +408,7 @@ function AddShowtimeModal(props) {
                 className="button-custom yes"
                 name="Đồng ý"
                 borderRadius="0.4em"
-                disabled={isInvalid === undefined ? true : isInvalid}
+                disabled={listShowtimes.length == 0}
                 onClick={(e, movie) => handleClick(e, movie)}
               >
                 Đồng ý

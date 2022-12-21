@@ -9,7 +9,7 @@ export default function NotFound() {
             <div className="central-body">
                 <h1 style={{ color: "white", fontSize: "80px" }}>404</h1>
                 <h1 style={{ color: "white", fontSize: "40px" }}>Trang bạn đang tìm kiếm không có</h1>
-                <a href="/Admin/Movies" className="btn-go-home" target="_blank" style={{ color: "white", fontSize: "20px" }}>VỀ TRANG CHỦ</a>
+                <a href="/Admin/Movies" className="btn-go-home" style={{ color: "white", fontSize: "20px" }}>VỀ TRANG CHỦ</a>
             </div>
             <div className="objects">
                 <img className="object_rocket" src="http://salehriaz.com/404Page/img/rocket.svg" width="40px" />

@@ -159,7 +159,7 @@ export const deleteFDAction = async ({ store, props, navigate }) => {
             icon: "success",
             buttons: false,
         });
-
+        navigate(0)
     } else
         swal({
             title: "Xóa combo thất bại",

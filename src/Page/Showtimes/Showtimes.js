@@ -142,6 +142,7 @@ export default function Showtimes() {
                               )}
                               <AddShowtimeModal
                                 startDate={movieDetail?.ngayKhoiChieu}
+                                duration={movieDetail?.thoiLuong}
                                 clusterName={theater.tenCumRap}
                                 clusterID={theater._id}
                                 slug={slug.slug}
@@ -162,7 +163,7 @@ export default function Showtimes() {
                                   }}
                                 >
                                   {lichChieu?.map((item) => {
-                                    if (item.tenCumRap._id == theater._id) {
+                                    if (item.tenCumRap._id == theater._id && new Date(item.ngayChieu) >= new Date()) {
                                       return (
                                         <>
                                           <h5 style={{ color: "rgb(31, 166, 245)", fontWeight: "600" }}>{item.tenRap.tenRap}</h5>
@@ -241,6 +242,7 @@ export default function Showtimes() {
                                                       e.stopPropagation();
                                                       handleDelete(item._id);
                                                     }}
+                                                    disabled={item.gheDaChon.length > 0}
                                                   />
                                                 </span>
                                               </li>
