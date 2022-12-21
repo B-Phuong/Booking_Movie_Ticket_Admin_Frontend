@@ -1,5 +1,5 @@
 
-const API_DOMAIN = "http://localhost:5000/"  // "https://api.baophuong.tk/"
+const API_DOMAIN = "https://api.baophuong.tk/"
 
 export const API_MOVIE = {
   COMING: API_DOMAIN + "movies/coming",
