@@ -11,20 +11,16 @@ export const BarChart = () => {
     useEffect(() => {
         getTop10Users({ store })
         setLoading(false)
-    }, [store.charts?.Top10Users?.top10Users])
+    }, [])
 
     // console.log(">> BARCHART top10", store.charts.Top10Users?.top10Users)
-    let dataFilter = store.charts.Top10Users?.top10Users
+    let dataFilter = store.charts?.Top10Users?.top10Users
     let userName = dataFilter?.map((item) => {
         return item["user"];
     });
     let total = dataFilter?.map((item) => {
         return item["total"];
     });
-    let formatCurency = total?.map((item) => {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item)
-    })
-
     const state = {
 
         series: [{

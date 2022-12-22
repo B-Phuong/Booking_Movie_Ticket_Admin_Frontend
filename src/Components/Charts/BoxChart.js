@@ -47,7 +47,7 @@ const BoxChart = () => {
         </div>
       </div>)
   }
-  let statisticalByYear = store.ticketBooking.GetStatisticalByYear?.total
+  let statisticalByYear = store.ticketBooking?.GetStatisticalByYear?.total
   let sumOfAccounts = store.users.listUsers?.users?.length;
   let sumOfShowingMovies = store.lsShowingMovie.ShowingMovie?.listMovie?.length;
   let sumOfComingMovies = store.lsComingMovie.ComingMovie?.listMovie?.length;
