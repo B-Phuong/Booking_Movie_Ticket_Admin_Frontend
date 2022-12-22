@@ -7,7 +7,6 @@ import RecducerShowtimes from "../Reducer/ReducerShowtimes";
 import ReducerFoodDrinks from "../Reducer/ReducerFoodDrinks";
 import ReducerTicketBookings from "../Reducer/ReducerTicketBookings";
 import ReducerUsers from "../Reducer/ReducerUsers";
-import { getRevenueByTheater } from "../Action/ChartActions";
 export const StoreContext = createContext(null);
 const Store = ({ children }) => {
   const [comingMovie, DispatchComingMovie] = ReducerMovies();
@@ -30,7 +29,7 @@ const Store = ({ children }) => {
   const [topMovies, DispatchTopMovies] = ReducerMovies(null);
   const [users, DispatchUsers] = ReducerUsers(null);
   const [getStatisticalByYear, DispatchGetStatistical] = ReducerTicketBookings(null);
-  const [top10user, DispatchTop10Users] = ReducerUsers(null);
+  const [top10users, DispatchTop10Users] = ReducerUsers(null);
   const [adminDetail, DispatchAdminDetail] = ReducerUsers(null);
   const [revenueByTheater, DispatchRevenueByTheater] = ReducerTheaters(null);
   const [timelineOfShowtime, DispatchTimelineOfShowtime] = ReducerShowtimes(null);
@@ -95,7 +94,7 @@ const Store = ({ children }) => {
       MoviesInTheaterDispatch: DispatchMoviesInTheater,
     },
     charts: {
-      Top10Users: top10user,
+      Top10Users: top10users,
       Top10UsersDispatch: DispatchTop10Users,
 
       RevenueByTheater: revenueByTheater,

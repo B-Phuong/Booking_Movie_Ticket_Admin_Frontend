@@ -20,7 +20,6 @@ function AddFDForm(props) {
     giaGoc: "",
     hinhAnh: "",
     giamGia: "",
-    soLuongBan: "",
   };
   const [detailFD, setDetailFD] = useState(emptyFD);
   const initModal = () => {

@@ -1,9 +1,5 @@
-import { API_ACCOUNTS, API_CHARTS } from "../../common/ApiController";
+import { API_CHARTS } from "../../common/ApiController";
 import swal from 'sweetalert'
-import Reducer from '../Reducer/ReducerAccounts'
-import { SIGN_IN } from "../Constant/accountConst";
-import { useContext } from "react";
-import { StoreContext } from "../Store/Store";
 const warningAlert = (error, title = "Xảy ra lỗi") => {
     swal({
         title: title,
@@ -86,7 +82,7 @@ export const getShowtimeTicketSold = async ({ store }) => {
     // console.log(">> CALL GET", data)
 }
 
-export const getTop10User = async ({ store }) => {
+export const getTop10Users = async ({ store }) => {
     getShowtimeTicketSold({ store })
     let data = store.ticketBooking?.GetAllTicketBooking?.lsTicketBookings
     // console.log(">> dataa", data)

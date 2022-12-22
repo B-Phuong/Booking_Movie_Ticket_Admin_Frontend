@@ -3,15 +3,15 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts'
 import { List } from 'react-content-loader';
-import { getShowtimeTicketSold, getTop10User } from '../../Redux/Action/ChartActions';
+import { getTop10Users } from '../../Redux/Action/ChartActions';
 import { StoreContext } from '../../Redux/Store/Store';
 export const BarChart = () => {
     const store = useContext(StoreContext)
     const [isLoading, setLoading] = useState(false);
     useEffect(() => {
-        getTop10User({ store })
+        getTop10Users({ store })
         setLoading(false)
-    }, [])
+    }, [store.charts?.Top10Users?.top10Users])
 
     // console.log(">> BARCHART top10", store.charts.Top10Users?.top10Users)
     let dataFilter = store.charts.Top10Users?.top10Users

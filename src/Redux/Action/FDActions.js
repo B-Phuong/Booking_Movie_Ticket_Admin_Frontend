@@ -85,6 +85,7 @@ export const editFDAction = async ({ store, fd, biDanh, navigate, setShow }) => 
         });
         setTimeout(function () {
             setShow(false);
+            navigate(0)
         }, 1000);
     } else
         swal({
