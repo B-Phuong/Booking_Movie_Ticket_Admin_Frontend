@@ -84,7 +84,7 @@ export const editMovieAction = async ({ store, fd, navigate, biDanh, setIsEdit }
             title: "Cập nhật thành công!",
             text: "",
             icon: "success",
-            buttons: true,
+            buttons: false,
         });
         setIsEdit(false);
         setTimeout(function () {

@@ -142,6 +142,7 @@ export default function Showtimes() {
                               )}
                               <AddShowtimeModal
                                 startDate={movieDetail?.ngayKhoiChieu}
+                                endDate={movieDetail?.ngayKetThuc}
                                 duration={movieDetail?.thoiLuong}
                                 clusterName={theater.tenCumRap}
                                 clusterID={theater._id}

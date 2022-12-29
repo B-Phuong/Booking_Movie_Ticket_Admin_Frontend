@@ -1,0 +1,20 @@
+.warning-list {
+    overflow-y: auto;
+    max-height: 300px;
+    min-height: 300px;
+    min-width: 200px;
+}
+
+.error-list {
+    overflow-y: auto;
+    max-height: 300px;
+    /* min-height: 300px; */
+    min-width: 200px;
+}
+
+.add-list {
+    overflow-y: auto;
+    max-height: 300px;
+    /* min-height: 300px; */
+    min-width: 350px;
+}

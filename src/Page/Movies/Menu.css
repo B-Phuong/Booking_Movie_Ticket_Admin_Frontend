@@ -14,7 +14,8 @@
 
 .vertical-menu a {
   background-color: #ccc;
-  font-family: "JetBrains Mono",monospace;
+  /* font-family: "Open Sans", Helvetica, sans-serif; */
+  font-family: "JetBrains Mono", monospace;
 
   color: black;
   display: block;
@@ -22,7 +23,7 @@
   text-decoration: none;
   font-size: large;
   background-image: radial-gradient(100% 100% at 100% 0, #5180c6 0, #225793 100%);
-  transition: box-shadow .15s,transform .15s;
+  transition: box-shadow .15s, transform .15s;
 }
 
 .vertical-menu a:hover {

@@ -21,19 +21,19 @@ function App() {
     <div>
       <BrowserRouter>
         {/* <HeaderAdmin /> */}
-        <Offline>
+        {/* <Offline>
           <NoInternetConnection />
-        </Offline>
-        <Online>
-          <Routes >
-            <Route path="/AdminSignIn" element={<SignIn />} />
-            <Route element={<PrivateAdminRoutes />}>
-              <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} />
-              <Route path="/Admin/*" element={<AdminMenu />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Online>
+        </Offline> */}
+        {/* <Online> */}
+        <Routes >
+          <Route path="/AdminSignIn" element={<SignIn />} />
+          <Route element={<PrivateAdminRoutes />}>
+            <Route exact path="/" element={<Navigate to="/Admin/Movies" replace />} />
+            <Route path="/Admin/*" element={<AdminMenu />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        {/* </Online> */}
         {/* <Footer /> */}
       </BrowserRouter>
     </div>

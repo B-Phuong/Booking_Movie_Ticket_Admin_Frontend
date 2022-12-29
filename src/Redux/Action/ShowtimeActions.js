@@ -40,6 +40,7 @@ export const addShowtimeAction = async ({ store, body, navigate, props }) => {
                     title: "Thêm lịch chiếu thành công",
                     text: "",
                     icon: "success",
+                    buttons: false,
                 });
                 setTimeout(function () {
                     window.location.reload();

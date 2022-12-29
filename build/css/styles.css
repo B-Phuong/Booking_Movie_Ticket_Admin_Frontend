@@ -1,9 +1,11 @@
 * {
-  font-family: monospace;
+  font-family: monospace !important;
+  /* "Open Sans", Helvetica, sans-serif; */
+  /* // monospace; */
 }
 
 body {
-  font-family: monospace;
+  font-family: monospace !important;
   letter-spacing: 1px;
   animation: all 0.5s;
 }

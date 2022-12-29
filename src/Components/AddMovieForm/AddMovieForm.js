@@ -215,6 +215,16 @@ function AddMovieForm(props) {
               }}
             />
           </Form.Group>
+          <Form.Group className="mb-3" style={{ width: "92%" }}>
+            <Form.Label>Đường dẫn trailer</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={1}
+              onChange={(event) => {
+                detailMovie.trailer = event.target.value;
+              }}
+            />
+          </Form.Group>
           <Row className="mb-3">
             <div className="row">
               <div className="col-md-5">

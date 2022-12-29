@@ -11,6 +11,7 @@ import { addShowtimeAction } from "../../Redux/Action/ShowtimeActions";
 import { getAllRoomsAction } from "../../Redux/Action/RoomActions"
 import Swal from "sweetalert2";
 import SweetAlert from "react-swal";
+import Calendar from "../Calendar/Calender";
 
 function AddShowtimeModal(props) {
   const [isShow, setInvokeModal] = useState(false);
@@ -31,6 +32,9 @@ function AddShowtimeModal(props) {
   const [detailShowtime, setDetailShowtime] = useState(emptyShowtime);
   const [listShowtimes, setListShowtimes] = useState([]);
   const [failed, setFailedList] = useState([])
+  const [warning, setWarningList] = useState([])
+  let warningList = []
+  let listShowtimesList = []
   // console.log("*", detailShowtime);
   // console.log("**", props.clusterName);
   useEffect(() => {
@@ -38,6 +42,7 @@ function AddShowtimeModal(props) {
       setFailedList(store.movie?.FailedShowtimes?.failed || []);
       setFail(true)
       setListShowtimes([])
+      setWarningList([])
     }
     else {
       setFail(false)
@@ -82,8 +87,10 @@ function AddShowtimeModal(props) {
     setDetailShowtime(emptyShowtime);
     rooms = rooms.sort((a, b) => a.tenRap.localeCompare(b.tenRap));
     setListShowtimes([])
+    setWarningList([])
     setFailedList([])
     setInvalid(true)
+    setTime()
   };
   const formattedDate = (dateInput) => {
     let today = new Date(dateInput);
@@ -131,74 +138,66 @@ function AddShowtimeModal(props) {
       }
     }
   };
+
+  const getTimeEnd = (datetime) => {
+    let getTime = new Date(datetime).getTime() + (props.duration + 10) * 60000; // thêm 10p để rạp chuẩn bị suất chiếu tiếp theo
+    return getTime
+  }
+  const getDate = (datetime) => {
+    return datetime.split(" ")[0]
+  }
+  const getTime = (datetime) => {
+    return new Date(datetime).getTime()
+  }
   const handleAddList = (e, movie) => {
     setFail(false)
     // console.log(">> listShowtimes test")
-    let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
+    list.forEach((item) => {
+      let formatDateTime = `${item.ngayChieu} ${time}`;
+      getTimeEnd(formatDateTime)
+      const getSelectEmlements = document.querySelectorAll('select')
+      let tenRap = getSelectEmlements[getSelectEmlements.length - 1].querySelector(`option[value="${detailShowtime.tenRap}"]`)
+      let body = {
+        ngayChieu: formatDateTime,
+        tenRapBangChu: tenRap.innerHTML,
+        tenRap: detailShowtime.tenRap,
+        tenCumRap: props.clusterID,
+        giaVe: item.giaVe
+      }
+      let compareSameValues = listShowtimes.filter((item) => item.ngayChieu === body.ngayChieu
+        && item.tenRap === body.tenRap);
+      let compareSameTheaterWValidHourEnd = listShowtimes.filter((item) => getDate(item.ngayChieu) === getDate(body.ngayChieu) && item.tenRap === body.tenRap
+        && ((getTime(item.ngayChieu) <= getTime(body.ngayChieu) && getTime(body.ngayChieu) <= getTimeEnd(item.ngayChieu))
+          || getTime(item.ngayChieu) <= getTimeEnd(body.ngayChieu) && getTimeEnd(body.ngayChieu) <= getTimeEnd(item.ngayChieu)));
+      if (listShowtimes.length > 0)
+        if (compareSameValues.length === 0) {
+          if (compareSameTheaterWValidHourEnd.length !== 0)
+            return warningList.push({ ngayChieu: formatDateTime, loi: `Giờ chiếu cách nhau ${Math.floor((props.duration + 10) / 60)} giờ ${(props.duration + 10) % 60} phút` })
+          // console.log(">> List showtimes", listShowtimes)
+          return listShowtimesList.push(body)//([...listShowtimes, body])
+        } else return warningList.push({ ngayChieu: formatDateTime, loi: 'Lịch chiếu này đã được thêm vào lúc nãy' })
+      else return listShowtimes.push(body)//setListShowtimes([body])
+    })
+    setWarningList(warningList)
+    setListShowtimes([...listShowtimes, ...listShowtimesList])
+    // let formatDateTime = `${detailShowtime.ngayChieu} ${detailShowtime.gioChieu}:${detailShowtime.phutChieu}`;
 
-    const getTimeEnd = (datetime) => {
-      let getTime = new Date(datetime).getTime() + (props.duration + 10) * 60000; // thêm 10p để rạp chuẩn bị suất chiếu tiếp theo
-      console.log(">> getTime", getTime)
-      return getTime
-    }
-    const getTime = (datetime) => {
-      return new Date(datetime).getTime()
-    }
-    getTimeEnd(formatDateTime)
-    const getDate = (datetime) => {
-      return datetime.split(" ")[0]
-    }
-
-    let tenRap = document.querySelectorAll('select')[0].querySelector(`option[value="${detailShowtime.tenRap}"]`)
-
-    let body = {
-      ngayChieu: formatDateTime,
-      tenRapBangChu: tenRap.innerHTML,
-      tenRap: detailShowtime.tenRap,
-      tenCumRap: props.clusterID,
-      giaVe: detailShowtime.giaVe
-    }
-    let compareSameValues = listShowtimes.filter((item) => item.ngayChieu === body.ngayChieu
-      && item.tenRap === body.tenRap);
-
-    let compareSameTheaterWValidHourEnd = listShowtimes.filter((item) => getDate(item.ngayChieu) === getDate(body.ngayChieu) && item.tenRap === body.tenRap
-      && ((getTime(item.ngayChieu) < getTime(body.ngayChieu) && getTime(body.ngayChieu) < getTimeEnd(item.ngayChieu))
-        || getTime(item.ngayChieu) < getTimeEnd(body.ngayChieu) && getTimeEnd(body.ngayChieu) < getTimeEnd(item.ngayChieu)));
-    // console.log(">> compareSameValues", compareSameValues)
-    // console.log(">> compareSameTheaterWValidHourEnd", compareSameTheaterWValidHourEnd)
-    //TH1: 19:20  -> 21:20
-    //TH2: 17:20 --> 19:20  16 --> 18
-
-    // 18:20 --> 20:20
-
-    // test: 13:10  --> 15:10 
-    // 17:30 --> 19:30
-    //   start < x < timeEnd || start <timeEnd(x) < timeEnd
-
-    if (listShowtimes.length > 0)
-      if (compareSameValues.length === 0) {
-        if (compareSameTheaterWValidHourEnd.length !== 0)
-          return Swal.fire(`Giờ chiếu cách nhau ${Math.floor((props.duration + 10) / 60)} giờ ${(props.duration + 10) % 60} phút`)
-        console.log(">> List showtimes", listShowtimes)
-        return setListShowtimes([...listShowtimes, body])
-      } else return Swal.fire('Lịch chiếu này đã được thêm vào lúc nãy')
-    else return setListShowtimes([body])
-
-  }
-  var today = new Date();
-  var chooseDate = new Date();
-  var startDate = new Date(props.startDate)
-  if (today > startDate)
-    chooseDate.setDate(today.getDate() + 1);
-  else {
-    chooseDate.setFullYear(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
   }
   const handleDelete = (item, e) => {
     e.preventDefault()
     let listAfterRemoveItem = listShowtimes.filter((showtime) => showtime !== item)
     setListShowtimes(listAfterRemoveItem)
-    console.log(">> List showtimes", listShowtimes)
+  }
+  const [list, setList] = useState([])
+  const [time, setTime] = useState()
+  const handleAddMultiple = (newValue) => {
+    if (list === newValue) { return }
+    setList(newValue)
+  }
 
+  const handleChangeTime = (newValue) => {
+    // console.log(">> show time ơ đây", newValue.$H + ":" + newValue.$m)
+    setTime(newValue.$H + ":" + newValue.$m)
   }
   return (
     <div>
@@ -224,30 +223,11 @@ function AddShowtimeModal(props) {
           <Modal.Body>
             <div style={{ background: "transparent", maxWidth: "800px" }}>
               <Form style={{ maxWidth: "800px" }}>
+                <Calendar handleSet={handleAddMultiple} handleTime={handleChangeTime}
+                  startDate={props.startDate} endDate={props.endDate} warning={warning}
+                  failed={failed} />
+
                 <Row className="mb-3">
-                  <Form.Group as={Col} md="4">
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label="Ngày chiếu"
-                      className="mb-3"
-                    >
-                      <Form.Control
-                        className="is-invalid add-showtime"
-                        required
-                        type="date"
-                        name="ngayChieu"
-                        min={formattedDate(chooseDate)}
-                        onChange={(e) => {
-                          checkValid(e);
-                          checkPrice(e);
-                          detailShowtime.ngayChieu = e.target.value;
-                        }}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        Chọn ngày khởi chiếu cho phim
-                      </Form.Control.Feedback>
-                    </FloatingLabel>
-                  </Form.Group>
                   <Form.Group as={Col} md="4">
                     <FloatingLabel
                       controlId="floatingInput"
@@ -277,121 +257,59 @@ function AddShowtimeModal(props) {
                       </Form.Control.Feedback>
                     </FloatingLabel>
                   </Form.Group>
-                  <Form.Group as={Col} md="3">
-                    {detailShowtime?.giaVe
-                      ? `Giá vé: ${detailShowtime?.giaVe} VNĐ`
-                      : ""}
-                  </Form.Group>
                 </Row>
-                <Row className="mb-3">
-                  <Form.Group as={Col} md="4">
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label="Giờ"
-                      className="mb-3"
-                    >
-                      <Form.Select
-                        className="is-invalid add-showtime"
-                        name="gioChieu"
-                        onChange={(e) => {
-                          checkValid(e);
-                          detailShowtime.gioChieu = e.target.value;
-                        }}
-                        required
-                      >
-                        <option value="">Chọn giờ chiếu</option>
-                        {Array.from(Array(15).keys())?.map((item, index) => {
-                          return (
-                            <option key={index} value={item + 9}>
-                              {item + 9}
-                            </option>
-                          );
-                        })}
-                      </Form.Select>
-                      <Form.Control.Feedback type="invalid">
-                        Chọn giờ chiếu cho phim
-                      </Form.Control.Feedback>
-                    </FloatingLabel>
-                  </Form.Group>
+                <div style={{ display: "flex" }}>
 
-                  <Form.Group as={Col} md="4">
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label="Phút"
-                      className="mb-3"
-                    >
-                      <Form.Select
-                        className="is-invalid add-showtime"
-                        name="phutChieu"
-                        required
-                        onChange={(e) => {
-                          checkValid(e);
-                          detailShowtime.phutChieu = e.target.value;
-                        }}
-                      >
-                        <option value="">Chọn phút chiếu</option>
-                        {Array.from(Array(12).keys())?.map((item, index) => {
-                          return (
-                            <option key={index} value={item * 5}>
-                              {item * 5}
-                            </option>
-                          );
-                        })}
-                      </Form.Select>
-                      <Form.Control.Feedback type="invalid">
-                        Chọn ngày khởi chiếu cho phim
-                      </Form.Control.Feedback>
-                    </FloatingLabel>
-                  </Form.Group>
+                  <div className="add-list" style={{ paddingLeft: "10px" }}>
+                    Các suất chiếu sẽ thêm <br></br>
+                    {
+                      listShowtimes?.map((item, index) => {
+                        return (
+                          <>
+                            {index + 1}.&nbsp;
+                            {item.tenRapBangChu} vào &nbsp;
+                            {item.ngayChieu} giá &nbsp;
+                            <br></br>
+                            {item.giaVe}/ vé  &nbsp;
+                            <Button
+                              color="black"
+                              name={<i className="fa fa-trash"></i>}
+                              background="pink"
+                              width="30px"
+                              height="30px"
+                              borderRadius="10.2em"
+                              fontWeight="bold"
+                              onClick={(e) => {
+                                handleDelete(item, e);
+                              }}
+                            />
+                            <br />
+                          </>
+                        )
+                      })
+                    }
+                  </div>
 
-                </Row>
-
-                Các suất chiếu sẽ thêm  <br></br>
-                {
-                  listShowtimes?.map((item) => {
-                    return (
-                      <>
-                        {item.tenRapBangChu} &nbsp;
-                        {item.ngayChieu} &nbsp;
-                        {item.giaVe} &nbsp;
-                        <Button
-                          color="black"
-                          name={<i className="fa fa-trash"></i>}
-                          background="pink"
-                          width="30px"
-                          height="30px"
-                          borderRadius="10.2em"
-                          fontWeight="bold"
-                          onClick={(e) => {
-
-                            handleDelete(item, e);
-                          }}
-                        />
-                        <br />
-                      </>
-                    )
-                  })
-
-                }
-                <br></br>
-                Các lịch thêm thất bại <br></br>
-                {
-                  failed?.map((item, index) => {
-                    return (
-                      <div style={{ color: "red" }}>
-                        {item.showtime.ngayChieu} tại {item.showtime.tenRapBangChu} -&gt;  &nbsp;
-                        {item.error} &nbsp;
-                        <br />
-                      </div>
-                    )
-                  })
-                }
+                  <div className="error-list">
+                    Các lịch thêm thất bại <br></br>
+                    {
+                      failed?.map((item, index) => {
+                        return (
+                          <div style={{ color: "red" }}>
+                            {index + 1}.&nbsp;
+                            {item.showtime.ngayChieu} tại {item.showtime.tenRapBangChu} &nbsp; -&gt;  &nbsp;
+                            {item.error} &nbsp;
+                            <br />
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
               </Form>
             </div>
-
             {/* <EditForm /> */}
           </Modal.Body>
-
           <Modal.Footer>
             <div className="d-grid gap-2 col-6 mx-auto">
               <button
@@ -399,7 +317,7 @@ function AddShowtimeModal(props) {
                 className="button-custom no"
                 style={{ background: "radial-gradient(100% 100% at 100% 0, #71ff5a 0, #35b853 100%)" }}
                 borderRadius="0.4em"
-                disabled={isInvalid === undefined ? true : isInvalid}
+                disabled={isInvalid === undefined || time === undefined ? true : isInvalid}
                 onClick={(e, movie) => handleAddList(e, movie)}
               >
                 Thêm

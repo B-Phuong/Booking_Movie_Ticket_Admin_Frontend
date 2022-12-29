@@ -312,6 +312,21 @@ function EditMovieModal(props) {
                       }}
                     />
                   </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Đường dẫ trailer</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={1}
+                      value={detailMovie?.trailer}
+                      disabled={!isEdit}
+                      onChange={(event) => {
+                        setDetailMovie({
+                          ...detailMovie,
+                          trailer: event.target.value,
+                        });
+                      }}
+                    />
+                  </Form.Group>
 
                   <Row className="mb-3">
                     <Form.Group as={Col} md="3" controlId="validationCustom04">
